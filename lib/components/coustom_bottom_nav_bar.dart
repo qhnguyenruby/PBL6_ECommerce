@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:online_shop_app/function/local_storage.dart';
 import 'package:online_shop_app/screens/home/home_screen.dart';
+import 'package:online_shop_app/screens/profile/profile_screen.dart';
 // import 'package:online_shop_app/screens/profile/profile_screen.dart';
 import 'package:online_shop_app/screens/sign_in/sign_in_screen.dart';
 import '../constants.dart';
@@ -73,7 +74,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   if (currentToken == "") {
                     Navigator.pushNamed(context, SignInScreen.routeName);
                   } else {
-                    // Navigator.pushNamed(context, ProfileScreen.routeName);
+                    Navigator.pushNamed(context, ProfileScreen.routeName);
                   }
                 },
               ),
