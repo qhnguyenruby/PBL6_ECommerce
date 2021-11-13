@@ -5,6 +5,7 @@ import 'package:online_shop_app/function/dialog.dart';
 import 'package:online_shop_app/components/form_error.dart';
 import 'package:online_shop_app/helper/keyboard.dart';
 import 'package:online_shop_app/models/LoginRequest.dart';
+import 'package:online_shop_app/screens/profile/profile_screen.dart';
 // import 'package:online_shop_app/screens/profile/profile_screen.dart';
 import 'package:online_shop_app/screens/screen_controller/screen_controller.dart';
 import 'package:online_shop_app/services/account_service.dart';
@@ -81,30 +82,30 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             press: () async {
-              // LoginRequest loginRequest = LoginRequest(
-              //   username: _usernameController.text,
-              //   password: _passwordController.text,
-              // );
-              // AccountService accountService = AccountService();
-              // if (_formKey.currentState!.validate()) {
-              //   _formKey.currentState!.save();
-              //   KeyboardUtil.hideKeyboard(context);
-              //   var responseCode = await accountService.Login(loginRequest);
-              //   if (responseCode == 200) {
-              //     Navigator.pushNamed(context, ProfileScreen.routeName);
-              //     displayDialog(
-              //       context,
-              //       "Message",
-              //       "Login Successfully!",
-              //     );
-              //   } else {
-              //     displayDialog(
-              //       context,
-              //       "An Error Occurred",
-              //       "No account was found matching that username and password!",
-              //     );
-              //   }
-              // }
+              LoginRequest loginRequest = LoginRequest(
+                username: _usernameController.text,
+                password: _passwordController.text,
+              );
+              AccountService accountService = AccountService();
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                KeyboardUtil.hideKeyboard(context);
+                var responseCode = await accountService.Login(loginRequest);
+                if (responseCode == 200) {
+                  Navigator.pushNamed(context, ProfileScreen.routeName);
+                  displayDialog(
+                    context,
+                    "Message",
+                    "Login Successfully!",
+                  );
+                } else {
+                  displayDialog(
+                    context,
+                    "An Error Occurred",
+                    "No account was found matching that username and password!",
+                  );
+                }
+              }
             },
           ),
         ],
