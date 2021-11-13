@@ -36,4 +36,34 @@ class AccountService {
     }
     return res.statusCode;
   }
+
+  Future<int> Register(RegisterRequest registerRequest) async {
+    var url = "${SERVER_IP}/api/Accounts/register";
+    Map data = {
+      "fullName": registerRequest.fullName,
+      "email": registerRequest.email,
+      "phoneNumber": registerRequest.phoneNumber,
+      "address": registerRequest.address,
+      "username": registerRequest.username,
+      "password": registerRequest.password,
+    };
+    var jsonResponse = null;
+    var res = await http.post(
+      Uri.parse(url),
+      body: json.encode(data),
+      headers: {'Content-Type': 'application/json'},
+    );
+    print('Response status: ${res.statusCode}');
+
+    if (res.statusCode == 200) {
+      jsonResponse = json.decode(res.body);
+      print('Response status: ${res.statusCode}');
+      print('Response body: ${res.body}');
+      if (jsonResponse != null) {
+        // sharedPreferences.setString("token", jsonResponse['resultObj']);
+        LocalStorage().saveToken(jsonResponse['resultObj']);
+      }
+    }
+    return res.statusCode;
+  }
 }

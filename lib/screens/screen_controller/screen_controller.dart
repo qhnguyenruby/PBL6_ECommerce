@@ -4,7 +4,7 @@ import 'package:online_shop_app/constants.dart';
 import 'package:online_shop_app/local_storage/shared_preferences.dart';
 import 'package:online_shop_app/screens/category_product/category_product_screen.dart';
 import 'package:online_shop_app/screens/home/home_screen.dart';
-// import 'package:online_shop_app/screens/profile/profile_screen.dart';
+import 'package:online_shop_app/screens/profile/profile_screen.dart';
 import 'package:online_shop_app/screens/sign_in/sign_in_screen.dart';
 // import 'package:provider/provider.dart';
 
@@ -23,7 +23,7 @@ class _ScreenControllerState extends State<ScreenController> {
   final screens = [
     HomeScreen(),
     CategoryProductScreen(),
-    // ProfileScreen(),
+    ProfileScreen(),
   ];
 
   @override
