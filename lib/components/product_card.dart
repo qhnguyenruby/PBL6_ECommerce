@@ -45,8 +45,9 @@ class ProductCard extends StatelessWidget {
                   child: Hero(
                     tag: product.id.toString(),
                     child: FadeInImage(
-                      image:
-                          NetworkImage("${SERVER_IP}${product.thumbnailImage}"),
+                      image: NetworkImage(
+                        "${SERVER_IP}${product.thumbnailImage}",
+                      ),
                       placeholder: AssetImage('assets/images/Spinner.gif'),
                     ),
                   ),

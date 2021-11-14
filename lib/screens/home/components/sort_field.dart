@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:online_shop_app/components/product_card.dart';
 import 'package:online_shop_app/components/style.dart';
 import 'package:online_shop_app/constants.dart';
+import 'package:online_shop_app/models/ProductHomeView.dart';
 import 'package:online_shop_app/models/SortProductsRequest.dart';
 import 'package:online_shop_app/services/product_service.dart';
 import '../../../size_config.dart';
 
 class SortField extends StatefulWidget {
-  const SortField({Key? key}) : super(key: key);
+  final List<ProductHomeView> lastestProducs;
+  const SortField({Key? key, required this.lastestProducs}) : super(key: key);
   @override
-  _SortFieldState createState() => _SortFieldState();
+  _SortFieldState createState() => _SortFieldState(lastestProducs);
 }
 
 class _SortFieldState extends State<SortField> {
@@ -20,7 +22,24 @@ class _SortFieldState extends State<SortField> {
     {"label": 'Giá cao đến thấp', "arrayMappedname": 'priceDown'},
   ];
   int selectedCategory = 0;
+
   List selectedCategoryList = [];
+
+  _SortFieldState(List<ProductHomeView> lastestProducs) {
+    this.selectedCategoryList = lastestProducs;
+  }
+
+  Future<List<ProductHomeView>> getProductList(int index) async {
+    ProductService productService = ProductService();
+    var response = await productService.GetProductPaging(
+      SortProductsRequest(
+        pageIndex: 1,
+        pageSize: 10,
+        sortBy: categories[index]['arrayMappedname'].toString(),
+      ),
+    );
+    return response;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,22 +57,15 @@ class _SortFieldState extends State<SortField> {
               ),
               margin: EdgeInsets.only(top: 10, bottom: 10),
               child: ElevatedButton(
-                onPressed: () async {
-                  ProductService productService = ProductService();
-                  var response = await productService.GetProductPaging(
-                    SortProductsRequest(
-                      pageIndex: 1,
-                      pageSize: 10,
-                      sortBy: categories[index]['arrayMappedname'].toString(),
-                    ),
+                onPressed: () {
+                  getProductList(index).then(
+                    (value) {
+                      setState(() {
+                        selectedCategory = index;
+                        selectedCategoryList = value;
+                      });
+                    },
                   );
-                  // for (int i = 0; i < response.length; i++) {
-                  //   print("Product $i: ${response[i].name}");
-                  // }
-                  setState(() {
-                    selectedCategory = index;
-                    selectedCategoryList = response;
-                  });
                 },
                 child: PrimaryText(
                   text: categories[index]['label'].toString(),
