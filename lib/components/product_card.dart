@@ -47,8 +47,7 @@ class ProductCard extends StatelessWidget {
                     child: FadeInImage(
                       image:
                           NetworkImage("${SERVER_IP}${product.thumbnailImage}"),
-                      placeholder:
-                          AssetImage('assets/images/Profile Image.png'),
+                      placeholder: AssetImage('assets/images/Spinner.gif'),
                     ),
                   ),
                 ),
