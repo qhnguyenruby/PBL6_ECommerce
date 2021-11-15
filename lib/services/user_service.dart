@@ -47,7 +47,7 @@ class UserService {
   }
 
   Future<int> UpdateUser(UserUpdate userUpdate) async {
-    var url = "${SERVER_IP}/api/Users/Update";
+    var url = "${SERVER_IP}/api/Users";
     Map data = {
       "fullName": userUpdate.fullName,
       "email": userUpdate.email,
@@ -55,7 +55,7 @@ class UserService {
       "address": userUpdate.address,
     };
     var token = await getTokenStorage();
-    var res = await http.post(
+    var res = await http.put(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',

@@ -38,4 +38,4 @@ const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kInvalidPhoneNumberError = "Please Enter Valid Phone Number";
 const String kAddressNullError = "Please Enter your address";
 
-const SERVER_IP = "http://192.168.1.91:8081";
+const SERVER_IP = "http://192.168.1.91:8082";

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:online_shop_app/models/Product.dart';
+import 'package:online_shop_app/models/ProductHomeView.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
   }) : super(key: key);
 
   final double width, aspectRetio;
-  final Product product;
+  final ProductHomeView product;
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +43,18 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: Hero(
                     tag: product.id.toString(),
-                    child: Image.asset(product.images[0]),
+                    child: FadeInImage(
+                      image: NetworkImage(
+                        "${SERVER_IP}${product.thumbnailImage}",
+                      ),
+                      placeholder: AssetImage('assets/images/Spinner.gif'),
+                    ),
                   ),
                 ),
               ),
               const SizedBox(height: 10),
               Text(
-                product.title,
+                product.name,
                 style: TextStyle(color: Colors.black),
                 maxLines: 2,
               ),
@@ -57,11 +62,33 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "${product.price} vnđ",
+                    "${product.price} d",
                     style: TextStyle(
                       fontSize: getProportionateScreenWidth(18),
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w200,
                       color: kPrimaryColor,
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "${product.viewCount.toString()} ",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Icon(
+                          Icons.visibility,
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                      ],
                     ),
                   ),
                   // InkWell(

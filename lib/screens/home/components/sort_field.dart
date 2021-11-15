@@ -2,20 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:online_shop_app/components/product_card.dart';
 import 'package:online_shop_app/components/style.dart';
 import 'package:online_shop_app/constants.dart';
-import 'package:online_shop_app/models/Product.dart';
-import 'package:online_shop_app/screens/home/components/list_category.dart';
-
+import 'package:online_shop_app/models/ProductHomeView.dart';
+import 'package:online_shop_app/models/SortProductsRequest.dart';
+import 'package:online_shop_app/services/product_service.dart';
 import '../../../size_config.dart';
 
 class SortField extends StatefulWidget {
-  const SortField({Key? key}) : super(key: key);
+  final List<ProductHomeView> lastestProducs;
+  const SortField({Key? key, required this.lastestProducs}) : super(key: key);
   @override
-  _SortFieldState createState() => _SortFieldState();
+  _SortFieldState createState() => _SortFieldState(lastestProducs);
 }
 
 class _SortFieldState extends State<SortField> {
+  List categories = [
+    {"label": 'Mới nhất', "arrayMappedname": 'lastest'},
+    {"label": 'Phổ biến', "arrayMappedname": 'popular'},
+    {"label": 'Giá thấp đến cao', "arrayMappedname": 'priceUp'},
+    {"label": 'Giá cao đến thấp', "arrayMappedname": 'priceDown'},
+  ];
   int selectedCategory = 0;
-  List selectedCategoryList = lastest;
+
+  List selectedCategoryList = [];
+
+  _SortFieldState(List<ProductHomeView> lastestProducs) {
+    this.selectedCategoryList = lastestProducs;
+  }
+
+  Future<List<ProductHomeView>> getProductList(int index) async {
+    ProductService productService = ProductService();
+    var response = await productService.GetProductPaging(
+      SortProductsRequest(
+        pageIndex: 1,
+        pageSize: 10,
+        sortBy: categories[index]['arrayMappedname'].toString(),
+      ),
+    );
+    return response;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +58,14 @@ class _SortFieldState extends State<SortField> {
               margin: EdgeInsets.only(top: 10, bottom: 10),
               child: ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    selectedCategory = index;
-                    selectedCategoryList =
-                        categories[index]['arrayMappedname'] as List;
-                  });
+                  getProductList(index).then(
+                    (value) {
+                      setState(() {
+                        selectedCategory = index;
+                        selectedCategoryList = value;
+                      });
+                    },
+                  );
                 },
                 child: PrimaryText(
                   text: categories[index]['label'].toString(),
@@ -70,13 +97,12 @@ class _SortFieldState extends State<SortField> {
               childAspectRatio: 2.0 / 3.0,
               children: [
                 ...List.generate(
-                  demoProducts.length,
+                  selectedCategoryList.length,
                   (index) {
-                    if (demoProducts[index].isPopular)
-                      return ProductCard(product: demoProducts[index]);
+                    return ProductCard(product: selectedCategoryList[index]);
 
-                    return SizedBox
-                        .shrink(); // here by default width and height is 0
+                    // return SizedBox
+                    //     .shrink(); // here by default width and height is 0
                   },
                 ),
                 SizedBox(width: getProportionateScreenWidth(20)),
