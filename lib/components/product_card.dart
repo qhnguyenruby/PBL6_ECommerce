@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:online_shop_app/models/Product.dart';
 import 'package:online_shop_app/models/ProductHomeView.dart';
 
 import '../constants.dart';
