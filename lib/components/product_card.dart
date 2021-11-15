@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop_app/models/ProductHomeView.dart';
+import 'package:online_shop_app/screens/product_detail/product_detail_screen.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -30,6 +31,10 @@ class ProductCard extends StatelessWidget {
           //   DetailsScreen.routeName,
           //   arguments: ProductDetailsArguments(product: product),
           // ),
+          onTap: () => Navigator.pushNamed(
+            context,
+            ProductDetailScreen.routeName,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

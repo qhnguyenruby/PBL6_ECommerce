@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:online_shop_app/screens/category_product/category_product_screen.dart';
 import 'package:online_shop_app/screens/home/home_screen.dart';
 import 'package:online_shop_app/screens/login_success/login_success_screen.dart';
+import 'package:online_shop_app/screens/product_detail/product_detail_screen.dart';
 import 'package:online_shop_app/screens/profile/profile_screen.dart';
 import 'package:online_shop_app/screens/profile_detail/profile_detail.dart';
 import 'package:online_shop_app/screens/screen_controller/screen_controller.dart';
@@ -16,6 +17,7 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
   ProfileDetailScreen.routeName: (context) => ProfileDetailScreen(),
+  ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
   CategoryProductScreen.routeName: (context) => CategoryProductScreen(),
   ScreenController.routeName: (context) => ScreenController(),
   SignInScreen.routeName: (context) => SignInScreen(),

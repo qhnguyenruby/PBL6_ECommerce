@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:online_shop_app/components/custom_dialog.dart';
 import 'package:online_shop_app/local_storage/shared_preferences.dart';
 import 'package:online_shop_app/screens/profile_detail/profile_detail.dart';
-import 'package:online_shop_app/screens/screen_controller/screen_controller.dart';
-
 import '../../../size_config.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -16,7 +14,7 @@ class Body extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: getProportionateScreenHeight(40)),
-          // ProfilePic(),
+          ProfilePic(),
           SizedBox(height: 20),
           ProfileMenu(
             text: "Thông tin cá nhân",
