@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop_app/models/ProductDetail.dart';
 import 'package:online_shop_app/models/ProductHomeView.dart';
 import 'package:online_shop_app/screens/product_detail/product_detail_screen.dart';
+import 'package:online_shop_app/services/product_service.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -31,10 +33,17 @@ class ProductCard extends StatelessWidget {
           //   DetailsScreen.routeName,
           //   arguments: ProductDetailsArguments(product: product),
           // ),
-          onTap: () => Navigator.pushNamed(
-            context,
-            ProductDetailScreen.routeName,
-          ),
+          onTap: () async {
+            // Navigator.pushNamed(
+            //   context,
+            //   ProductDetailScreen.routeName,
+            //   arguments: ProductDetailsArguments(product: product),
+            // );
+            ProductService productService = ProductService();
+            var response =
+                await productService.getProductDetailById(product.id);
+            print(response.name);
+          },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -67,10 +76,10 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "${product.price} d",
+                    "${product.price.toString()} đ",
                     style: TextStyle(
                       fontSize: getProportionateScreenWidth(18),
-                      fontWeight: FontWeight.w200,
+                      fontWeight: FontWeight.bold,
                       color: kPrimaryColor,
                     ),
                   ),

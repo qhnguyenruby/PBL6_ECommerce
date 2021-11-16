@@ -1,5 +1,6 @@
 import 'package:online_shop_app/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:online_shop_app/models/ProductDetail.dart';
 import 'package:online_shop_app/models/ProductHomeView.dart';
 import 'package:online_shop_app/models/ProductPagingResponse.dart';
 import 'package:online_shop_app/models/SortProductsRequest.dart';
@@ -26,6 +27,23 @@ class ProductService {
       return productPagingResponseFromJson(res.body).items;
     } else {
       throw Exception("Failed to get product paging!");
+    }
+  }
+
+  Future<ProductDetail> getProductDetailById(int id) async {
+    var url = "${SERVER_IP}/api/Products/$id";
+    var res = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    print('Response status: ${res.statusCode}');
+
+    if (res.statusCode == 200) {
+      return productDetailFromJson(res.body);
+    } else {
+      throw Exception("Failed to get product detail!");
     }
   }
 }

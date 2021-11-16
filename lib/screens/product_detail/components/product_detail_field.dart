@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop_app/components/custom_btn.dart';
 import 'package:readmore/readmore.dart';
+
+import '../../../constants.dart';
+import '../../../size_config.dart';
 
 class ProductDetailField extends StatefulWidget {
   final String image;
   final String name;
-  final double price;
+  final int price;
   ProductDetailField(
       {required this.image, required this.name, required this.price});
   @override
@@ -58,13 +62,13 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
             children: <Widget>[
               Text(widget.name, style: myStyle),
               Text(
-                "\$ ${widget.price.toString()}",
+                "${widget.price.toString()} đ",
                 style: TextStyle(
                     color: Color(0xff9b96d6),
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
-              Text("Description", style: myStyle),
+              Text("Mô tả sản phẩm: ", style: myStyle),
             ],
           ),
         ],
@@ -192,7 +196,7 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
           height: 10,
         ),
         Text(
-          "Color",
+          "Màu",
           style: myStyle,
         ),
         SizedBox(
@@ -230,7 +234,7 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
     );
   }
 
-  Widget _buildQuentityPart() {
+  Widget _buildQuantityPart() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -238,7 +242,7 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
           height: 10,
         ),
         Text(
-          "Quentity",
+          "Số lượng",
           style: myStyle,
         ),
         SizedBox(
@@ -288,31 +292,101 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
     );
   }
 
-  // Widget _buildButtonPart() {
-  //   return Container(
-  //     height: 60,
-  //     child: MyButton(
-  //       name: "Add To Cart",
-  //       onPressed: () {
-  //         getSize();
-  //         getColor();
-  //         productProvider.getCheckOutData(
-  //           image: widget.image,
-  //           color: color,
-  //           size: size,
-  //           name: widget.name,
-  //           price: widget.price,
-  //           quentity: count,
-  //         );
-  //         Navigator.of(context).pushReplacement(
-  //           MaterialPageRoute(
-  //             builder: (ctx) => CheckOut(),
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
+  Widget _buildShopPart() {
+    return Column(
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          // height: 90,
+          width: double.infinity,
+          // padding: EdgeInsets.symmetric(
+          //   horizontal: getProportionateScreenWidth(20),
+          //   vertical: getProportionateScreenWidth(15),
+          // ),
+          // decoration: BoxDecoration(
+          //   color: Color(0xfffea200),
+          //   borderRadius: BorderRadius.circular(4),
+          // ),
+          child: Row(
+            children: [
+              Card(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.grey.shade400, width: 1),
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(13),
+                  child: Container(
+                    height: 48,
+                    width: 48,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(widget.image),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                // decoration: BoxDecoration(
+                //   color: Color(0xfffea200),
+                //   borderRadius: BorderRadius.circular(4),
+                // ),
+                width: 200,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(10),
+                    vertical: getProportionateScreenWidth(15),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("Đạt's clothes"),
+                      Text("Quảng Nam"),
+                    ],
+                  ),
+                ),
+              ),
+              CustomButton(
+                color: Colors.red,
+                press: () {},
+                text: "Xem Shop",
+                height: 40,
+                width: 80,
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildButtonPart() {
+    return Row(
+      children: [
+        CustomButton(
+          text: "Thêm giỏ hàng",
+          press: () {},
+          color: kPrimaryColor,
+          width: 160,
+          height: 60,
+        ),
+        SizedBox(
+          width: 13,
+        ),
+        CustomButton(
+          text: "Mua ngay",
+          press: () {},
+          color: kPrimaryColor,
+          width: 160,
+          height: 60,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -327,13 +401,14 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
               children: <Widget>[
                 _buildNameToDescriptionPart(),
                 _buildDiscription(),
-                _buildSizePart(),
                 _buildColorPart(),
-                _buildQuentityPart(),
+                _buildSizePart(),
+                _buildQuantityPart(),
+                _buildShopPart(),
                 SizedBox(
                   height: 15,
                 ),
-                // _buildButtonPart(),
+                _buildButtonPart(),
               ],
             ),
           ),

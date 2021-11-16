@@ -12,3 +12,9 @@ class ProductDetailScreen extends StatelessWidget {
     );
   }
 }
+
+class ProductDetailsArguments {
+  final ProductDetailScreen product;
+
+  ProductDetailsArguments({required this.product});
+}
