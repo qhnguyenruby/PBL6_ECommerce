@@ -40,7 +40,7 @@ class ProductDetail {
   String shopName;
   int totalStock;
   List<Detail> details;
-  List<Image> images;
+  List<ImageItem> images;
 
   factory ProductDetail.fromJson(Map<String, dynamic> json) => ProductDetail(
         id: json["resultObj"]["id"],
@@ -57,8 +57,8 @@ class ProductDetail {
         totalStock: json["resultObj"]["totalStock"],
         details: List<Detail>.from(
             json["resultObj"]["details"].map((x) => Detail.fromJson(x))),
-        images: List<Image>.from(
-            json["resultObj"]["images"].map((x) => Image.fromJson(x))),
+        images: List<ImageItem>.from(
+            json["resultObj"]["images"].map((x) => ImageItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -111,8 +111,8 @@ class Detail {
       };
 }
 
-class Image {
-  Image({
+class ImageItem {
+  ImageItem({
     required this.id,
     required this.productId,
     required this.imagePath,
@@ -128,12 +128,12 @@ class Image {
   String colorName;
   bool isSizeDetail;
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
+  factory ImageItem.fromJson(Map<String, dynamic> json) => ImageItem(
         id: json["id"],
         productId: json["productId"],
         imagePath: json["imagePath"],
         isDefault: json["isDefault"],
-        colorName: json["colorName"] == null ? null : json["colorName"],
+        colorName: json["colorName"] == null ? "không màu" : json["colorName"],
         isSizeDetail: json["isSizeDetail"],
       );
 

@@ -42,7 +42,12 @@ class ProductCard extends StatelessWidget {
             ProductService productService = ProductService();
             var response =
                 await productService.getProductDetailById(product.id);
-            print(response.name);
+            // print(response.details[0].color);
+            Navigator.pushNamed(
+              context,
+              ProductDetailScreen.routeName,
+              arguments: ProductDetailsArguments(product: response),
+            );
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
