@@ -591,12 +591,6 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
     );
   }
 
-  // late PersistentBottomSheetController _controller; // <------ Instance variable
-  // final _scaffoldKey = GlobalKey<ScaffoldState>();
-  // void selectColorAndSize() {
-
-  // }
-
   Widget _buildSelectColorAndSizeForm(mySetState, typeForm) {
     return SingleChildScrollView(
       child: Container(
