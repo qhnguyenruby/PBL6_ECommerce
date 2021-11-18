@@ -3,6 +3,8 @@ import 'package:online_shop_app/components/custom_surfix_icon.dart';
 import 'package:online_shop_app/components/default_button.dart';
 import 'package:online_shop_app/components/form_error.dart';
 import 'package:online_shop_app/components/no_account_text.dart';
+import 'package:online_shop_app/function/dialog.dart';
+import 'package:online_shop_app/services/user_service.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
@@ -49,6 +51,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
   String? email;
+  final TextEditingController _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -56,6 +59,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       child: Column(
         children: [
           TextFormField(
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             onSaved: (newValue) => email = newValue,
             onChanged: (value) {
@@ -97,10 +101,25 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
-            text: "Continue",
-            press: () {
+            text: "Tiếp tục",
+            press: () async {
               if (_formKey.currentState!.validate()) {
-                // Do what you want to do
+                UserService userService = UserService();
+                var responseCode =
+                    await userService.ForgotPassword(_emailController.text);
+                if (responseCode == 200) {
+                  displayDialog(
+                    context,
+                    "Message",
+                    "Đã gửi thông báo tới email của bạn!",
+                  );
+                } else {
+                  displayDialog(
+                    context,
+                    "An Error Occurred",
+                    "Lỗi!",
+                  );
+                }
               }
             },
           ),

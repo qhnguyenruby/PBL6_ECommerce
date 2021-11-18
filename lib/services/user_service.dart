@@ -28,7 +28,7 @@ class UserService {
   // }
 
   Future<UserUpdate> GetUserByToken() async {
-    var url = "${SERVER_IP}/api/Users";
+    var url = "${SERVER_IP}/api/Users/me";
     var token = await getTokenStorage();
     var res = await http.get(
       Uri.parse(url),
@@ -63,9 +63,25 @@ class UserService {
       },
       body: json.encode(data),
     );
-    print('Response reponse update: ${res.body}');
+    // print('Response reponse update: ${res.body}');
 
     // return json.decode(res.body);
+    return res.statusCode;
+  }
+
+  Future<int> ForgotPassword(String email) async {
+    var url = "${SERVER_IP}/api/Users/$email/ForgetPassword";
+    var res = await http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+    );
+    print('Response status: ${res.statusCode}');
+
+    // if (res.statusCode == 200) {
+    //   jsonResponse = json.decode(res.body);
+    //   if (jsonResponse != null) {
+    //   }
+    // }
     return res.statusCode;
   }
 }
