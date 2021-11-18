@@ -7,16 +7,20 @@ class CustomButton extends StatelessWidget {
     this.text,
     this.press,
     this.color,
+    this.height,
+    this.width,
   }) : super(key: key);
   final String? text;
   final Function? press;
   final Color? color;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: getProportionateScreenWidth(90),
-      height: getProportionateScreenHeight(40),
+      width: getProportionateScreenWidth(width!),
+      height: getProportionateScreenHeight(height!),
       child: TextButton(
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
