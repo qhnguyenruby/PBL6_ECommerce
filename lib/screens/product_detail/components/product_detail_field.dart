@@ -4,7 +4,6 @@ import 'package:online_shop_app/components/custom_btn.dart';
 import 'package:online_shop_app/components/default_button.dart';
 import 'package:online_shop_app/models/ProductDetail.dart';
 import 'package:readmore/readmore.dart';
-// import 'package:carousel_slider/carousel_slider.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
@@ -24,6 +23,8 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   final List<String> imgPathList = [];
   int currentStock = 0;
   String currentImageWithColor = "";
+  List<ImageItem> imageList = [];
+  List<Detail> detailList = [];
 
   List<bool> sized = [];
   int sizeIndex = 0;
@@ -36,6 +37,8 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   String color = "";
 
   void initState() {
+    imageList = widget.product.images;
+    detailList = widget.product.details;
     setThumbnailList();
     setInitColorList();
     setInitColored();
@@ -49,7 +52,6 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   }
 
   void setImageWithColor() {
-    List<ImageItem> imageList = widget.product.images;
     for (int i = 0; i < imageList.length; i++) {
       if (imageList[i].colorName == color) {
         currentImageWithColor = imageList[i].imagePath;
@@ -58,7 +60,6 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   }
 
   void setCurrentStock() {
-    List<Detail> detailList = widget.product.details;
     for (int i = 0; i < detailList.length; i++) {
       if (detailList[i].color == color && detailList[i].size == size) {
         currentStock = detailList[i].stock;
@@ -67,7 +68,6 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   }
 
   void setThumbnailList() {
-    List<ImageItem> imageList = widget.product.images;
     for (int i = 0; i < imageList.length; i++) {
       if (imageList[i].isDefault || imageList[i].colorName == "không màu") {
         imgPathList.add('${SERVER_IP}${imageList[i].imagePath}');
@@ -76,7 +76,6 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   }
 
   void setInitSizeList() {
-    List<Detail> detailList = widget.product.details;
     for (int i = 0; i < detailList.length; i++) {
       if (!sizeList.contains(detailList[i].size)) {
         sizeList.add(detailList[i].size);
@@ -92,7 +91,6 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   }
 
   void setInitColorList() {
-    List<Detail> detailList = widget.product.details;
     for (int i = 0; i < detailList.length; i++) {
       if (!colorList.contains(detailList[i].color)) {
         colorList.add(detailList[i].color);
