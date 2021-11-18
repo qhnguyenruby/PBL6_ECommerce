@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:online_shop_app/components/custom_btn.dart';
 import 'package:online_shop_app/components/default_button.dart';
 import 'package:online_shop_app/models/ProductDetail.dart';
+import 'package:online_shop_app/models/Shop.dart';
+import 'package:online_shop_app/services/shop_service.dart';
 import 'package:readmore/readmore.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -466,74 +468,101 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
     );
   }
 
+  Future<Shop> getShopByShopId(int id) async {
+    ShopService shopService = ShopService();
+    var shopDetail = await shopService.getShopById(id);
+    return shopDetail;
+  }
+
   Widget _buildShopPart() {
     return Column(
       children: [
         SizedBox(
           height: 15,
         ),
-        Container(
-          // height: 90,
-          width: double.infinity,
-          // padding: EdgeInsets.symmetric(
-          //   horizontal: getProportionateScreenWidth(20),
-          //   vertical: getProportionateScreenWidth(15),
-          // ),
-          // decoration: BoxDecoration(
-          //   color: Color(0xfffea200),
-          //   borderRadius: BorderRadius.circular(4),
-          // ),
-          child: Row(
-            children: [
-              Card(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.grey.shade400, width: 1),
-                ),
-                child: Container(
-                  padding: EdgeInsets.all(13),
-                  child: Container(
-                    height: 48,
-                    width: 48,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(
-                            "${SERVER_IP}${widget.product.images[0].imagePath}"),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
+        FutureBuilder(
+          future: getShopByShopId(widget.product.shopId),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Container(
+                // height: 90,
+                width: double.infinity,
+                // padding: EdgeInsets.symmetric(
+                //   horizontal: getProportionateScreenWidth(20),
+                //   vertical: getProportionateScreenWidth(15),
+                // ),
                 // decoration: BoxDecoration(
                 //   color: Color(0xfffea200),
                 //   borderRadius: BorderRadius.circular(4),
                 // ),
-                width: getProportionateScreenWidth(180),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(10),
-                    vertical: getProportionateScreenWidth(15),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Đạt's clothes"),
-                      Text("Quảng Nam"),
-                    ],
-                  ),
+                child: Row(
+                  children: [
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.grey.shade400, width: 1),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(13),
+                        child: Container(
+                          height: 48,
+                          width: 48,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: NetworkImage(
+                                  "${SERVER_IP}${(snapshot.data as Shop).avatar}"),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      // decoration: BoxDecoration(
+                      //   color: Color(0xfffea200),
+                      //   borderRadius: BorderRadius.circular(4),
+                      // ),
+                      width: getProportionateScreenWidth(180),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(10),
+                          vertical: getProportionateScreenWidth(15),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "${(snapshot.data as Shop).nameOfShop}",
+                              style: TextStyle(
+                                  // color: Color(0xff9b96d6),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${(snapshot.data as Shop).address}",
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    CustomButton(
+                      color: Colors.red,
+                      press: () {},
+                      text: "Xem Shop",
+                      height: 40,
+                      width: 80,
+                    )
+                  ],
                 ),
-              ),
-              CustomButton(
-                color: Colors.red,
-                press: () {},
-                text: "Xem Shop",
-                height: 40,
-                width: 80,
-              )
-            ],
-          ),
+              );
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
         ),
       ],
     );
