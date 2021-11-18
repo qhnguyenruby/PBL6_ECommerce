@@ -4,6 +4,8 @@ import 'package:online_shop_app/components/default_button.dart';
 import 'package:online_shop_app/components/form_error.dart';
 import 'package:online_shop_app/components/no_account_text.dart';
 import 'package:online_shop_app/function/dialog.dart';
+import 'package:online_shop_app/screens/comfirm_forgot_password/comfirm_forgot_password_screen.dart';
+import 'package:online_shop_app/screens/comfirm_forgot_password/components/confirm_forgot_password_form.dart';
 import 'package:online_shop_app/services/user_service.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -108,11 +110,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                 var responseCode =
                     await userService.ForgotPassword(_emailController.text);
                 if (responseCode == 200) {
-                  displayDialog(
-                    context,
-                    "Message",
-                    "Đã gửi thông báo tới email của bạn!",
-                  );
+                  Navigator.pushNamed(
+                      context, ConfirmForgotPasswordScreen.routeName);
                 } else {
                   displayDialog(
                     context,
