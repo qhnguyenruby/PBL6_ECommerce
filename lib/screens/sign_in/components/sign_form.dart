@@ -5,6 +5,7 @@ import 'package:online_shop_app/function/dialog.dart';
 import 'package:online_shop_app/components/form_error.dart';
 import 'package:online_shop_app/helper/keyboard.dart';
 import 'package:online_shop_app/models/LoginRequest.dart';
+import 'package:online_shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:online_shop_app/screens/profile/profile_screen.dart';
 // import 'package:online_shop_app/screens/profile/profile_screen.dart';
 import 'package:online_shop_app/screens/screen_controller/screen_controller.dart';
@@ -63,10 +64,10 @@ class _SignFormState extends State<SignForm> {
             children: [
               Spacer(),
               GestureDetector(
-                // onTap: () => Navigator.pushNamed(
-                //   context,
-                //   ForgotPasswordScreen.routeName,
-                // ),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  ForgotPasswordScreen.routeName,
+                ),
                 child: Text(
                   "Quên mật khẩu?",
                   style: TextStyle(
