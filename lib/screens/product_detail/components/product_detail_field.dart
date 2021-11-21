@@ -2,8 +2,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop_app/components/custom_btn.dart';
 import 'package:online_shop_app/components/default_button.dart';
+import 'package:online_shop_app/function/dialog.dart';
+import 'package:online_shop_app/function/local_storage.dart';
 import 'package:online_shop_app/models/ProductDetail.dart';
 import 'package:online_shop_app/models/Shop.dart';
+import 'package:online_shop_app/screens/sign_in/sign_in_screen.dart';
+import 'package:online_shop_app/services/cart_service.dart';
 import 'package:online_shop_app/services/shop_service.dart';
 import 'package:readmore/readmore.dart';
 import '../../../constants.dart';
@@ -27,6 +31,7 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   String currentImageWithColor = "";
   List<ImageItem> imageList = [];
   List<Detail> detailList = [];
+  int productIdSelected = 0;
 
   List<bool> sized = [];
   int sizeIndex = 0;
@@ -50,7 +55,14 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
     size = sizeList[0];
     setCurrentStock();
     setImageWithColor();
+    setProductDetailId();
     super.initState();
+  }
+
+  void setProductDetailId() {
+    productIdSelected = detailList
+        .firstWhere((element) => element.color == color && element.size == size)
+        .id;
   }
 
   void setImageWithColor() {
@@ -333,8 +345,10 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
               });
               getSize(setter);
               getCurrentStock(setter);
+              getProductDetailId(setter);
               print("Color value: $color");
               print("Size value: $size");
+              print("Product detail id: $productIdSelected");
             },
             isSelected: sized,
           ),
@@ -352,6 +366,15 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
         });
       }
     }
+  }
+
+  void getProductDetailId(setter) {
+    setter(() {
+      productIdSelected = detailList
+          .firstWhere(
+              (element) => element.color == color && element.size == size)
+          .id;
+    });
   }
 
   Widget _buildColorPart(setter) {
@@ -398,8 +421,10 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
               getColor(setter);
               getCurrentStock(setter);
               getImageWithColor(setter);
+              getProductDetailId(setter);
               print("Color value: $color");
               print("Size value: $size");
+              print("Product detail id: $productIdSelected");
             },
             isSelected: colored,
           ),
@@ -640,7 +665,31 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
               typeForm == "addCart"
                   ? DefaultButton(
                       text: "Thêm giỏ hàng",
-                      press: () {},
+                      press: () async {
+                        var token = await getTokenStorage();
+                        if (token == "") {
+                          Navigator.pushNamed(context, SignInScreen.routeName);
+                        } else {
+                          CartService cartService = CartService();
+                          var response = await cartService.AddProductToCart(
+                              productIdSelected, count);
+                          if (response == 200) {
+                            Navigator.pop(context);
+                            displayDialog(
+                              context,
+                              "Thông báo",
+                              "Đã thêm sản phẩm này vào giỏ hàng!",
+                            );
+                          } else {
+                            Navigator.pop(context);
+                            displayDialog(
+                              context,
+                              "Thông báo",
+                              "Lỗi thêm sản phẩm vào giỏ hàng!",
+                            );
+                          }
+                        }
+                      },
                     )
                   : DefaultButton(
                       text: "Mua ngay",
