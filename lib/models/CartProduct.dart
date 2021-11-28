@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-CartProduct cartFromJson(String str) => CartProduct.fromJson(json.decode(str));
+CartProduct cartProductFromJson(String str) =>
+    CartProduct.fromJson(json.decode(str));
 
-String cartToJson(CartProduct data) => json.encode(data.toJson());
+String cartProductToJson(CartProduct data) => json.encode(data.toJson());
 
 class CartProduct {
   CartProduct({
@@ -40,21 +41,21 @@ class CartProduct {
   bool isRemainInStock;
 
   factory CartProduct.fromJson(Map<String, dynamic> json) => CartProduct(
-        id: json["resultObj"]["id"],
-        productId: json["resultObj"]["productId"],
-        productDetailId: json["resultObj"]["productDetail_Id"],
-        shopId: json["resultObj"]["shopId"],
-        productName: json["resultObj"]["productName"],
-        color: json["resultObj"]["color"],
-        size: json["resultObj"]["size"],
-        shopName: json["resultObj"]["shopName"],
-        quantity: json["resultObj"]["quantity"],
-        stock: json["resultObj"]["stock"],
-        price: json["resultObj"]["price"],
-        image: json["resultObj"]["image"],
-        isShopAvailable: json["resultObj"]["isShopAvailable"],
-        isProductDetailAvailable: json["resultObj"]["isProductDetailAvailable"],
-        isRemainInStock: json["resultObj"]["isRemainInStock"],
+        id: json["id"],
+        productId: json["productId"],
+        productDetailId: json["productDetail_Id"],
+        shopId: json["shopId"],
+        productName: json["productName"],
+        color: json["color"],
+        size: json["size"],
+        shopName: json["shopName"],
+        quantity: json["quantity"],
+        stock: json["stock"],
+        price: json["price"],
+        image: json["image"],
+        isShopAvailable: json["isShopAvailable"],
+        isProductDetailAvailable: json["isProductDetailAvailable"],
+        isRemainInStock: json["isRemainInStock"],
       );
 
   Map<String, dynamic> toJson() => {
