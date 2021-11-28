@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop_app/components/custom_dialog.dart';
 import 'package:online_shop_app/local_storage/shared_preferences.dart';
+import 'package:online_shop_app/screens/cart/cart_screen.dart';
 import 'package:online_shop_app/screens/profile_detail/profile_detail.dart';
 import '../../../size_config.dart';
 import 'profile_menu.dart';
@@ -26,7 +27,9 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Giỏ hàng",
             icon: "assets/icons/Cart Icon.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, CartScreen.routeName);
+            },
           ),
           ProfileMenu(
             text: "Lịch sử mua hàng",

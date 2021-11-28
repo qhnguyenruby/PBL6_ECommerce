@@ -1,21 +1,40 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:online_shop_app/constants.dart';
+import 'package:online_shop_app/function/dialog.dart';
 import 'package:online_shop_app/models/CartProduct.dart';
+import 'package:online_shop_app/models/Carts.dart';
 import 'package:online_shop_app/screens/cart/components/check_out_card.dart';
+import 'package:online_shop_app/services/cart_service.dart';
 
 import '../../../size_config.dart';
 // import 'cart_card.dart';
 
 class Body extends StatefulWidget {
+  final List<CartProduct> cartItems;
+  Body({
+    required this.cartItems,
+  });
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  List picked = [false, false, false, false, false, false, false];
+  List picked = [];
   int count = 1;
   int totalAmount = 0;
+
+  void initState() {
+    setInitPicked();
+  }
+
+  void setInitPicked() {
+    for (int i = 0; i < widget.cartItems.length; i++) {
+      picked.add(false);
+    }
+  }
 
   pickToggle(index) {
     setState(() {
@@ -28,7 +47,7 @@ class _BodyState extends State<Body> {
     totalAmount = 0;
     for (int i = 0; i < picked.length; i++) {
       if (picked[i]) {
-        totalAmount += demoCarts[i].price * demoCarts[i].quantity;
+        totalAmount += widget.cartItems[i].price * widget.cartItems[i].quantity;
       }
       // if (i == picked.length - 1) {
       //   setState(() {
@@ -50,15 +69,31 @@ class _BodyState extends State<Body> {
             child: ListView.builder(
               // scrollDirection: Axis.vertical,
               // shrinkWrap: true,
-              itemCount: demoCarts.length,
+              itemCount: widget.cartItems.length,
               itemBuilder: (context, index) => Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Dismissible(
-                  key: Key(demoCarts[index].id.toString()),
+                  key: Key(widget.cartItems[index].id.toString()),
                   direction: DismissDirection.endToStart,
-                  onDismissed: (direction) {
+                  onDismissed: (direction) async {
+                    CartService cartService = new CartService();
+                    var response = await cartService.DeleteProductFromCart(
+                        widget.cartItems[index].id);
+                    if (response.statusCode == 200) {
+                      displayDialog(
+                        context,
+                        "Thông báo",
+                        "${json.decode(response.body)["message"]}",
+                      );
+                    } else {
+                      displayDialog(
+                        context,
+                        "Thông báo",
+                        "${response.body}",
+                      );
+                    }
                     setState(() {
-                      demoCarts.removeAt(index);
+                      widget.cartItems.removeAt(index);
                     });
                   },
                   background: Container(
@@ -75,18 +110,18 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                   child: CartCard(
-                    demoCarts[index],
-                    (!demoCarts[index].isShopAvailable ||
-                            !demoCarts[index].isProductDetailAvailable ||
-                            !demoCarts[index].isRemainInStock)
+                    widget.cartItems[index],
+                    (!widget.cartItems[index].isShopAvailable ||
+                            !widget.cartItems[index].isProductDetailAvailable ||
+                            !widget.cartItems[index].isRemainInStock)
                         ? false
                         : true,
                     index,
-                    (!demoCarts[index].isShopAvailable)
+                    (!widget.cartItems[index].isShopAvailable)
                         ? "Shop đã ngừng hoạt động"
-                        : (!demoCarts[index].isProductDetailAvailable)
+                        : (!widget.cartItems[index].isProductDetailAvailable)
                             ? "Sản phẩm không tồn tại"
-                            : (!demoCarts[index].isRemainInStock)
+                            : (!widget.cartItems[index].isRemainInStock)
                                 ? "Sản phẩm đã hết hàng"
                                 : "",
                   ),
@@ -141,10 +176,18 @@ class _BodyState extends State<Body> {
             child: Container(
               padding: EdgeInsets.all(getProportionateScreenWidth(10)),
               decoration: BoxDecoration(
-                color: Color(0xFFF5F6F9),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Image.asset(cartProduct.image),
+                  color: Color(0xFFF5F6F9),
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: (cartProduct.image != "/storage/" &&
+                            cartProduct.image != "")
+                        ? NetworkImage(
+                            "${SERVER_IP}/storage/${cartProduct.image}")
+                        : AssetImage("assets/images/notfoundimage.png")
+                            as ImageProvider,
+                  )),
+              // child: Image.asset(cartProduct.image),
             ),
           ),
         ),
