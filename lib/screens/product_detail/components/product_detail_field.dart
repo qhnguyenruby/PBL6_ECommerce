@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop_app/components/custom_btn.dart';
@@ -202,23 +204,19 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   Widget _buildNameToDescriptionPart() {
     return Container(
       height: 100,
-      child: Row(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(widget.product.name, style: myStyle),
-              Text(
-                "${widget.product.price.toString()} đ",
-                style: TextStyle(
-                    color: Color(0xff9b96d6),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-              // Text("Mô tả sản phẩm: ", style: myStyle),
-            ],
+          Text(widget.product.name, style: myStyle),
+          Text(
+            "${widget.product.price.toString()} đ",
+            style: TextStyle(
+                color: kPrimaryColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
           ),
+          // Text("Mô tả sản phẩm: ", style: myStyle),
         ],
       ),
     );
@@ -307,50 +305,53 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
           style: myStyle,
         ),
         SizedBox(
-          height: 15,
+          height: 10,
         ),
         Container(
-          width: 265,
-          child: ToggleButtons(
-            children: [
-              // Text("  ${sizeList[0]}  "),
-              // Text("  Đỏ chét  "),
-              // Text("L"),
-              // Text("XL"),
-              ...List.generate(
-                sizeList.length,
-                (index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Text(sizeList[index]),
-                  );
+          width: double.infinity,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: ToggleButtons(
+              children: [
+                // Text("  ${sizeList[0]}  "),
+                // Text("  Đỏ chét  "),
+                // Text("L"),
+                // Text("XL"),
+                ...List.generate(
+                  sizeList.length,
+                  (index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Text(sizeList[index]),
+                    );
 
-                  // return SizedBox
-                  //     .shrink(); // here by default width and height is 0
-                },
-              ),
-            ],
-            onPressed: (int index) {
-              setter(() {
-                for (int indexBtn = 0; indexBtn < sized.length; indexBtn++) {
-                  if (indexBtn == index) {
-                    sized[indexBtn] = true;
-                  } else {
-                    sized[indexBtn] = false;
+                    // return SizedBox
+                    //     .shrink(); // here by default width and height is 0
+                  },
+                ),
+              ],
+              onPressed: (int index) {
+                setter(() {
+                  for (int indexBtn = 0; indexBtn < sized.length; indexBtn++) {
+                    if (indexBtn == index) {
+                      sized[indexBtn] = true;
+                    } else {
+                      sized[indexBtn] = false;
+                    }
                   }
-                }
-              });
-              setter(() {
-                sizeIndex = index;
-              });
-              getSize(setter);
-              getCurrentStock(setter);
-              getProductDetailId(setter);
-              print("Color value: $color");
-              print("Size value: $size");
-              print("Product detail id: $productIdSelected");
-            },
-            isSelected: sized,
+                });
+                setter(() {
+                  sizeIndex = index;
+                });
+                getSize(setter);
+                getCurrentStock(setter);
+                getProductDetailId(setter);
+                print("Color value: $color");
+                print("Size value: $size");
+                print("Product detail id: $productIdSelected");
+              },
+              isSelected: sized,
+            ),
           ),
         ),
       ],
@@ -362,6 +363,11 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
     for (int i = 0; i < imageList.length; i++) {
       if (imageList[i].colorName == color) {
         setter(() {
+          // if (imageList[i].imagePath != "/storage/") {
+          //   currentImageWithColor = imageList[i].imagePath;
+          // } else {
+          //   return;
+          // }
           currentImageWithColor = imageList[i].imagePath;
         });
       }
@@ -386,47 +392,52 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
           style: myStyle,
         ),
         SizedBox(
-          height: 15,
+          height: 10,
         ),
         Container(
-          width: 265,
-          child: ToggleButtons(
-            children: [
-              ...List.generate(
-                colorList.length,
-                (index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Text(colorList[index]),
-                  );
+          width: double.infinity,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: ToggleButtons(
+              children: [
+                ...List.generate(
+                  colorList.length,
+                  (index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Text(colorList[index]),
+                    );
 
-                  // return SizedBox
-                  //     .shrink(); // here by default width and height is 0
-                },
-              ),
-            ],
-            onPressed: (int index) {
-              setter(() {
-                for (int indexBtn = 0; indexBtn < colored.length; indexBtn++) {
-                  if (indexBtn == index) {
-                    colored[indexBtn] = true;
-                  } else {
-                    colored[indexBtn] = false;
+                    // return SizedBox
+                    //     .shrink(); // here by default width and height is 0
+                  },
+                ),
+              ],
+              onPressed: (int index) {
+                setter(() {
+                  for (int indexBtn = 0;
+                      indexBtn < colored.length;
+                      indexBtn++) {
+                    if (indexBtn == index) {
+                      colored[indexBtn] = true;
+                    } else {
+                      colored[indexBtn] = false;
+                    }
                   }
-                }
-              });
-              setter(() {
-                colorIndex = index;
-              });
-              getColor(setter);
-              getCurrentStock(setter);
-              getImageWithColor(setter);
-              getProductDetailId(setter);
-              print("Color value: $color");
-              print("Size value: $size");
-              print("Product detail id: $productIdSelected");
-            },
-            isSelected: colored,
+                });
+                setter(() {
+                  colorIndex = index;
+                });
+                getColor(setter);
+                getCurrentStock(setter);
+                getImageWithColor(setter);
+                getProductDetailId(setter);
+                print("Color value: $color");
+                print("Size value: $size");
+                print("Product detail id: $productIdSelected");
+              },
+              isSelected: colored,
+            ),
           ),
         ),
       ],
@@ -608,7 +619,10 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: NetworkImage("${SERVER_IP}${currentImageWithColor}"),
+                  image: (currentImageWithColor != "/storage/")
+                      ? NetworkImage("${SERVER_IP}${currentImageWithColor}")
+                      : AssetImage("assets/images/notfoundimage.png")
+                          as ImageProvider,
                 ),
               ),
             ),
@@ -673,19 +687,19 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
                           CartService cartService = CartService();
                           var response = await cartService.AddProductToCart(
                               productIdSelected, count);
-                          if (response == 200) {
+                          if (response.statusCode == 200) {
                             Navigator.pop(context);
                             displayDialog(
                               context,
                               "Thông báo",
-                              "Đã thêm sản phẩm này vào giỏ hàng!",
+                              json.decode(response.body)['message'].toString(),
                             );
                           } else {
                             Navigator.pop(context);
                             displayDialog(
                               context,
                               "Thông báo",
-                              "Lỗi thêm sản phẩm vào giỏ hàng!",
+                              response.body.toString(),
                             );
                           }
                         }
