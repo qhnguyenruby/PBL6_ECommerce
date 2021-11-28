@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:online_shop_app/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:online_shop_app/function/local_storage.dart';
+import 'package:online_shop_app/models/ApiResponse.dart';
 
 class CartService {
   CartService() {}
 
-  Future<int> AddProductToCart(int productDetailId, int quantity) async {
+  Future<ApiResponse> AddProductToCart(
+      int productDetailId, int quantity) async {
     var url = "${SERVER_IP}/api/Cart";
     var token = await getTokenStorage();
     Map data = {
@@ -23,7 +25,6 @@ class CartService {
       },
     );
     print('Response status: ${res.statusCode}');
-
-    return res.statusCode;
+    return new ApiResponse(statusCode: res.statusCode, body: res.body);
   }
 }

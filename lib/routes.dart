@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:online_shop_app/screens/cart/cart_screen.dart';
 import 'package:online_shop_app/screens/category_product/category_product_screen.dart';
 import 'package:online_shop_app/screens/comfirm_forgot_password/comfirm_forgot_password_screen.dart';
 import 'package:online_shop_app/screens/forgot_password/forgot_password_screen.dart';
@@ -26,4 +27,5 @@ final Map<String, WidgetBuilder> routes = {
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
   ConfirmForgotPasswordScreen.routeName: (context) =>
       ConfirmForgotPasswordScreen(),
+  CartScreen.routeName: (context) => CartScreen(),
 };
