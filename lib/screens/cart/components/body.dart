@@ -25,6 +25,7 @@ class _BodyState extends State<Body> {
   List picked = [];
   int count = 1;
   int totalAmount = 0;
+  List<CartProduct> productPickedList = [];
 
   void initState() {
     setInitPicked();
@@ -40,6 +41,12 @@ class _BodyState extends State<Body> {
     setState(() {
       picked[index] = !picked[index];
       getTotalAmount();
+      productPickedList.clear();
+      for (int i = 0; i < picked.length; i++) {
+        if (picked[i]) {
+          productPickedList.add(widget.cartItems[i]);
+        }
+      }
     });
   }
 
@@ -130,7 +137,7 @@ class _BodyState extends State<Body> {
             ),
           ),
         ),
-        CheckoutCard(totalAmount: totalAmount),
+        CheckoutCard(totalAmount: totalAmount, cartProducts: productPickedList),
       ],
     );
   }
@@ -194,21 +201,26 @@ class _BodyState extends State<Body> {
         SizedBox(width: 20),
         Container(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                cartProduct.productName,
-                style: TextStyle(color: Colors.black, fontSize: 16),
-                maxLines: 2,
+              Container(
+                width: getProportionateScreenWidth(210),
+                child: Text(
+                  cartProduct.productName,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.black, fontSize: 14),
+                  maxLines: 2,
+                ),
               ),
               Text(
                 "Màu: ${cartProduct.color}",
-                style: TextStyle(color: Colors.black, fontSize: 16),
+                style: TextStyle(color: Colors.black, fontSize: 14),
                 maxLines: 2,
               ),
               Text(
                 "Size: ${cartProduct.size}",
-                style: TextStyle(color: Colors.black, fontSize: 16),
+                style: TextStyle(color: Colors.black, fontSize: 14),
                 maxLines: 2,
               ),
               Text.rich(
@@ -262,6 +274,9 @@ class _BodyState extends State<Body> {
                     }
                     getTotalAmount();
                   });
+                  CartService cartService = CartService();
+                  cartService.UpdateQuantityCartProduct(
+                      cartProduct.id, cartProduct.quantity);
                 },
               ),
               Text(
@@ -280,6 +295,9 @@ class _BodyState extends State<Body> {
                     }
                     getTotalAmount();
                   });
+                  CartService cartService = CartService();
+                  cartService.UpdateQuantityCartProduct(
+                      cartProduct.id, cartProduct.quantity);
                 },
               ),
             ],

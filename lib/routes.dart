@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:online_shop_app/screens/cart/cart_screen.dart';
+import 'package:online_shop_app/screens/cart_payment/cart_payment_screen.dart';
 import 'package:online_shop_app/screens/category_product/category_product_screen.dart';
 import 'package:online_shop_app/screens/comfirm_forgot_password/comfirm_forgot_password_screen.dart';
 import 'package:online_shop_app/screens/forgot_password/forgot_password_screen.dart';
@@ -28,4 +29,5 @@ final Map<String, WidgetBuilder> routes = {
   ConfirmForgotPasswordScreen.routeName: (context) =>
       ConfirmForgotPasswordScreen(),
   CartScreen.routeName: (context) => CartScreen(),
+  CartPayment.routeName: (context) => CartPayment(),
 };
