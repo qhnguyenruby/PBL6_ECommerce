@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:online_shop_app/components/default_button.dart';
+import 'package:online_shop_app/function/dialog.dart';
+import 'package:online_shop_app/models/CartProduct.dart';
+import 'package:online_shop_app/screens/cart_payment/cart_payment_screen.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
@@ -8,9 +11,11 @@ class CheckoutCard extends StatelessWidget {
   const CheckoutCard({
     Key? key,
     required this.totalAmount,
+    required this.cartProducts,
   }) : super(key: key);
 
   final int totalAmount;
+  final List<CartProduct> cartProducts;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +62,21 @@ class CheckoutCard extends StatelessWidget {
                   width: getProportionateScreenWidth(190),
                   child: DefaultButton(
                     text: "Mua hàng",
-                    press: () {},
+                    press: () {
+                      if (cartProducts.length > 0) {
+                        Navigator.pushNamed(
+                          context,
+                          CartPayment.routeName,
+                          arguments: cartProducts,
+                        );
+                      } else {
+                        displayDialog(
+                          context,
+                          "Thông báo",
+                          "Chọn sản phẩm muốn thanh toán!",
+                        );
+                      }
+                    },
                   ),
                 ),
               ],

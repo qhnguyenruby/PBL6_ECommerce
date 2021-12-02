@@ -27,8 +27,8 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Giỏ hàng",
             icon: "assets/icons/Cart Icon.svg",
-            press: () {
-              Navigator.pushNamed(context, CartScreen.routeName);
+            press: () => {
+              Navigator.pushNamed(context, CartScreen.routeName),
             },
           ),
           ProfileMenu(

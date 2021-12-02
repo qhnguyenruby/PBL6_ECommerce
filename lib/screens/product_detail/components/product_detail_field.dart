@@ -203,12 +203,17 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
 
   Widget _buildNameToDescriptionPart() {
     return Container(
-      height: 100,
+      height: getProportionateScreenHeight(100),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(widget.product.name, style: myStyle),
+          Text(
+            widget.product.name,
+            style: myStyle,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
           Text(
             "${widget.product.price.toString()} đ",
             style: TextStyle(
