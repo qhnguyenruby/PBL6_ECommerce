@@ -7,12 +7,6 @@ class LocalStorage {
     return prefs.commit();
   }
 
-  // Future<String?> getTokenStorage() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String? token = prefs.getString("token");
-  //   return token;
-  // }
-
   Future<String> getTokenStorage() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token");

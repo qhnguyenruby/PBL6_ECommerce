@@ -6,7 +6,15 @@ import 'package:online_shop_app/function/local_storage.dart';
 import 'package:online_shop_app/models/ApiResponse.dart';
 
 class CartService {
-  CartService() {}
+  // CartService() {}
+
+  static final CartService _singleton = CartService._internal();
+
+  factory CartService() {
+    return _singleton;
+  }
+
+  CartService._internal();
 
   Future<ApiResponse> AddProductToCart(
       int productDetailId, int quantity) async {

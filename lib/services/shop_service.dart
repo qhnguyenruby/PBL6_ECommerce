@@ -3,7 +3,15 @@ import 'package:http/http.dart' as http;
 import 'package:online_shop_app/models/Shop.dart';
 
 class ShopService {
-  ShopService() {}
+  // ShopService() {}
+
+  static final ShopService _singleton = ShopService._internal();
+
+  factory ShopService() {
+    return _singleton;
+  }
+
+  ShopService._internal();
 
   Future<Shop> getShopById(int id) async {
     var url = "${SERVER_IP}/api/Shops/Id?userId=0&shopId=$id";

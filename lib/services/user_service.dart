@@ -6,26 +6,15 @@ import 'package:http/http.dart' as http;
 import 'package:online_shop_app/models/UserUpdate.dart';
 
 class UserService {
-  UserService() {}
+  // UserService() {}
 
-  // Future<Map<String, dynamic>> GetUserByToken() async {
-  //   var url = "${SERVER_IP}/api/Users";
-  //   var token = await getTokenStorage();
-  //   var res = await http.get(
-  //     Uri.parse(url),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer $token',
-  //     },
-  //   );
-  //   print('Response status: ${res.statusCode}');
+  static final UserService _singleton = UserService._internal();
 
-  //   if (res.statusCode == 200) {
-  //     return json.decode(res.body);
-  //   } else {
-  //     throw Exception("Failed to get current user!");
-  //   }
-  // }
+  factory UserService() {
+    return _singleton;
+  }
+
+  UserService._internal();
 
   Future<UserUpdate> GetUserByToken() async {
     var url = "${SERVER_IP}/api/Users/me";
