@@ -45,6 +45,9 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   List<String> colorList = [];
   String color = "";
 
+  CartService cartService = CartService();
+  var response;
+
   void initState() {
     imageList = widget.product.images;
     detailList = widget.product.details;
@@ -689,8 +692,7 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
                         if (token == "") {
                           Navigator.pushNamed(context, SignInScreen.routeName);
                         } else {
-                          CartService cartService = CartService();
-                          var response = await cartService.AddProductToCart(
+                          response = await cartService.AddProductToCart(
                               productIdSelected, count);
                           if (response.statusCode == 200) {
                             Navigator.pop(context);

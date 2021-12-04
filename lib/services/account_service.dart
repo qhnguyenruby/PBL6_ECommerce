@@ -6,7 +6,15 @@ import 'package:online_shop_app/models/LoginRequest.dart';
 import 'package:online_shop_app/models/RegisterRequest.dart';
 
 class AccountService {
-  AccountService() {}
+  // AccountService() {}
+
+  static final AccountService _singleton = AccountService._internal();
+
+  factory AccountService() {
+    return _singleton;
+  }
+
+  AccountService._internal();
 
   Future<int> Login(LoginRequest loginRequest) async {
     // var url = Uri.https('$SERVER_IP', '/api/Accounts/login', {'q': '{http}'});

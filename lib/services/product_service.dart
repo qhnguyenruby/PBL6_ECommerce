@@ -6,7 +6,15 @@ import 'package:online_shop_app/models/ProductPagingResponse.dart';
 import 'package:online_shop_app/models/SortProductsRequest.dart';
 
 class ProductService {
-  ProductService() {}
+  // ProductService() {}
+
+  static final ProductService _singleton = ProductService._internal();
+
+  factory ProductService() {
+    return _singleton;
+  }
+
+  ProductService._internal();
 
   Future<List<ProductHomeView>> GetProductPaging(
       SortProductsRequest sortProductsRequest) async {
