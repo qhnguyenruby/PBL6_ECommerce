@@ -18,7 +18,7 @@ class CartService {
 
   Future<ApiResponse> AddProductToCart(
       int productDetailId, int quantity) async {
-    var url = "${SERVER_IP}/api/Cart";
+    var url = "${SERVER_IP}/api/Carts";
     var token = await getTokenStorage();
     Map data = {
       "productDetail_Id": productDetailId,
@@ -37,7 +37,7 @@ class CartService {
   }
 
   Future<ApiResponse> GetCart() async {
-    var url = "${SERVER_IP}/api/Cart";
+    var url = "${SERVER_IP}/api/Carts/me";
     var token = await getTokenStorage();
     var res = await http.get(
       Uri.parse(url),
@@ -71,7 +71,7 @@ class CartService {
 
   Future<ApiResponse> UpdateQuantityCartProduct(
       int cartProductId, int quantity) async {
-    var url = "${SERVER_IP}/api/Cart";
+    var url = "${SERVER_IP}/api/Carts";
     var token = await getTokenStorage();
     Map data = {
       "cartId": cartProductId,
