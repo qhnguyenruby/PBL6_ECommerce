@@ -14,7 +14,7 @@ class ShopService {
   ShopService._internal();
 
   Future<Shop> getShopById(int id) async {
-    var url = "${SERVER_IP}/api/Shops/Id?userId=0&shopId=$id";
+    var url = "${SERVER_IP}/api/Shops/$id";
     var res = await http.get(
       Uri.parse(url),
       headers: {

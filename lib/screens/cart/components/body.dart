@@ -189,8 +189,7 @@ class _BodyState extends State<Body> {
                     fit: BoxFit.fill,
                     image: (cartProduct.image != "/storage/" &&
                             cartProduct.image != "")
-                        ? NetworkImage(
-                            "${SERVER_IP}/storage/${cartProduct.image}")
+                        ? NetworkImage("${SERVER_IP}${cartProduct.image}")
                         : AssetImage("assets/images/notfoundimage.png")
                             as ImageProvider,
                   )),
