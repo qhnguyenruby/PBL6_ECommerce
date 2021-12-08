@@ -36,7 +36,7 @@ class UserService {
   }
 
   Future<int> UpdateUser(UserUpdate userUpdate) async {
-    var url = "${SERVER_IP}/api/Users";
+    var url = "${SERVER_IP}/api/Users/me";
     Map data = {
       "fullName": userUpdate.fullName,
       "email": userUpdate.email,
