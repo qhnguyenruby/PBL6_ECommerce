@@ -6,6 +6,8 @@ import 'package:online_shop_app/screens/comfirm_forgot_password/comfirm_forgot_p
 import 'package:online_shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:online_shop_app/screens/home/home_screen.dart';
 import 'package:online_shop_app/screens/login_success/login_success_screen.dart';
+import 'package:online_shop_app/screens/order_detail/order_detail_screen.dart';
+import 'package:online_shop_app/screens/orders/order_screen.dart';
 import 'package:online_shop_app/screens/product_detail/product_detail_screen.dart';
 import 'package:online_shop_app/screens/profile/profile_screen.dart';
 import 'package:online_shop_app/screens/profile_detail/profile_detail.dart';
@@ -30,4 +32,6 @@ final Map<String, WidgetBuilder> routes = {
       ConfirmForgotPasswordScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   CartPayment.routeName: (context) => CartPayment(),
+  OrderScreen.routeName: (context) => OrderScreen(),
+  OrderDetailScreen.routeName: (context) => OrderDetailScreen(),
 };
