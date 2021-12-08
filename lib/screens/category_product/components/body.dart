@@ -8,7 +8,7 @@ class Body extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Text(
-          'Favorite',
+          'Danh mục sản phẩm',
           style: TextStyle(fontSize: 60, color: Colors.orange),
         ),
       ),

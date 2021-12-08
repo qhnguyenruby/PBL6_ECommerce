@@ -14,7 +14,15 @@ class TotalPricePart extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Container(
+        height: getProportionateScreenHeight(38),
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: Color(0xFFBBBBBB)),
+            bottom: BorderSide(color: Color(0xFFBBBBBB)),
+          ),
+        ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               child: Text(
@@ -24,9 +32,9 @@ class TotalPricePart extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              width: getProportionateScreenWidth(120),
-            ),
+            // SizedBox(
+            //   width: getProportionateScreenWidth(120),
+            // ),
             Flexible(
               child: Text(
                 "Tổng tiền: $totalPrice đ",

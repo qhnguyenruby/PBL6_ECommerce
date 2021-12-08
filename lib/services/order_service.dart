@@ -6,8 +6,6 @@ import 'package:online_shop_app/function/local_storage.dart';
 import 'package:online_shop_app/models/ApiResponse.dart';
 
 class OrderService {
-  // CartService() {}
-
   static final OrderService _singleton = OrderService._internal();
 
   factory OrderService() {
@@ -37,5 +35,23 @@ class OrderService {
     );
     print('Response status: ${res.statusCode}');
     return new ApiResponse(statusCode: res.statusCode, body: res.body);
+  }
+
+  Future<ApiResponse> getOrders(String stateOrder) async {
+    var url = "${SERVER_IP}/api/Orders/me";
+    if (stateOrder != "") {
+      url = "${SERVER_IP}/api/Orders/me?state=${stateOrder}";
+    }
+
+    var token = await getTokenStorage();
+    var res = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    print('Response status: ${res.statusCode}');
+    return ApiResponse(statusCode: res.statusCode, body: res.body);
   }
 }
