@@ -7,6 +7,7 @@ import 'package:online_shop_app/constants.dart';
 import 'package:online_shop_app/function/dialog.dart';
 import 'package:online_shop_app/models/CartProduct.dart';
 import 'package:online_shop_app/screens/cart_payment/components/body.dart';
+import 'package:online_shop_app/screens/product_detail/product_detail_screen.dart';
 import 'package:online_shop_app/services/order_service.dart';
 import 'package:online_shop_app/services/user_service.dart';
 
@@ -40,26 +41,31 @@ class _CartPaymentState extends State<CartPayment> {
             cartIds.add(item.id);
           }
           var shipInfo = await UserService().GetUserByToken();
-          var response = await OrderService().CreateOrder(cartIds,
-              shipInfo.fullName, shipInfo.address, shipInfo.phoneNumber);
+          OrderService()
+              .CreateOrder(cartIds, shipInfo.fullName, shipInfo.address,
+                  shipInfo.phoneNumber)
+              .then((value) {
+            if (value.statusCode == 200) {
+              displayDialog(
+                context,
+                "Thông báo",
+                json.decode(value.body)['message'].toString(),
+              );
+            } else {
+              displayDialog(
+                context,
+                "Thông báo",
+                value.body,
+              );
+            }
+          });
+          Navigator.popUntil(
+              context, ModalRoute.withName(ProductDetailScreen.routeName));
           // displayDialog(
           //   context,
           //   "Thông báo",
           //   json.decode(response.body)['message'].toString(),
           // );
-          if (response.statusCode == 200) {
-            displayDialog(
-              context,
-              "Thông báo",
-              json.decode(response.body)['message'].toString(),
-            );
-          } else {
-            displayDialog(
-              context,
-              "Thông báo",
-              response.body,
-            );
-          }
 
           // Navigator.pop(context);
         },

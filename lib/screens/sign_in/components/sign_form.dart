@@ -91,19 +91,19 @@ class _SignFormState extends State<SignForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 KeyboardUtil.hideKeyboard(context);
-                var responseCode = await accountService.Login(loginRequest);
-                if (responseCode == 200) {
+                var response = await accountService.Login(loginRequest);
+                if (response.statusCode == 200) {
                   Navigator.pushNamed(context, ProfileScreen.routeName);
                   displayDialog(
                     context,
-                    "Message",
-                    "Login Successfully!",
+                    "Thông báo",
+                    "Đăng nhập thành công!",
                   );
                 } else {
                   displayDialog(
                     context,
-                    "An Error Occurred",
-                    "No account was found matching that username and password!",
+                    "Thông báo",
+                    "${response.body}",
                   );
                 }
               }

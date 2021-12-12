@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:online_shop_app/components/custom_surfix_icon.dart';
@@ -89,20 +91,19 @@ class _SignUpFormState extends State<SignUpForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 KeyboardUtil.hideKeyboard(context);
-                var responseCode =
-                    await accountService.Register(registerRequest);
-                if (responseCode == 200) {
+                var response = await accountService.Register(registerRequest);
+                if (response.statusCode == 200) {
                   Navigator.pop(context);
                   displayDialog(
                     context,
-                    "Message",
-                    "Register Successfully!",
+                    "Thông báo",
+                    "Đăng ký tài khoản thành công. Đăng nhập để tiếp tục!",
                   );
                 } else {
                   displayDialog(
                     context,
-                    "An Error Occurred",
-                    "Failed register!",
+                    "Thông báo",
+                    "${json.decode(response.body)["message"]}",
                   );
                 }
               }

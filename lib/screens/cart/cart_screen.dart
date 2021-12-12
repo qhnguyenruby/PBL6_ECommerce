@@ -34,11 +34,11 @@ class CartScreen extends StatelessWidget {
                 context,
                 cartItems,
               ),
-              body: (data.statusCode == 200)
+              body: (cartItems.isNotEmpty)
                   ? Body(cartItems: cartItems)
                   : Center(
                       child: Text(
-                        "${data.body}",
+                        "Giỏ hàng trống!",
                         textAlign: TextAlign.center,
                       ),
                     )

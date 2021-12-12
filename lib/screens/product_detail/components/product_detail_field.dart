@@ -6,8 +6,11 @@ import 'package:online_shop_app/components/custom_btn.dart';
 import 'package:online_shop_app/components/default_button.dart';
 import 'package:online_shop_app/function/dialog.dart';
 import 'package:online_shop_app/function/local_storage.dart';
+import 'package:online_shop_app/models/CartProduct.dart';
+import 'package:online_shop_app/models/Carts.dart';
 import 'package:online_shop_app/models/ProductDetail.dart';
 import 'package:online_shop_app/models/Shop.dart';
+import 'package:online_shop_app/screens/cart_payment/cart_payment_screen.dart';
 import 'package:online_shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:online_shop_app/services/cart_service.dart';
 import 'package:online_shop_app/services/shop_service.dart';
@@ -714,7 +717,27 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
                     )
                   : DefaultButton(
                       text: "Mua ngay",
-                      press: () {},
+                      press: () async {
+                        response = await cartService.AddProductToCart(
+                            productIdSelected, count);
+                        if (response.statusCode != 200) {
+                          displayDialog(
+                            context,
+                            "Thông báo",
+                            response.body.toString(),
+                          );
+                        } else {
+                          var resLatestCart = await cartService.GetCart();
+                          List<CartProduct> cartProducts = [];
+                          cartProducts.add(
+                              cartsFromJson(resLatestCart.body).cartItems[0]);
+                          Navigator.pushNamed(
+                            context,
+                            CartPayment.routeName,
+                            arguments: cartProducts,
+                          );
+                        }
+                      },
                     ),
               // _buildButtonPart(),
             ],

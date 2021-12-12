@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop_app/components/grid_product.dart';
 import 'package:online_shop_app/components/product_card.dart';
 import 'package:online_shop_app/components/style.dart';
 import 'package:online_shop_app/constants.dart';
@@ -15,12 +16,6 @@ class SortField extends StatefulWidget {
 }
 
 class _SortFieldState extends State<SortField> {
-  List categories = [
-    {"label": 'Mới nhất', "arrayMappedname": 'lastest'},
-    {"label": 'Phổ biến', "arrayMappedname": 'popular'},
-    {"label": 'Giá thấp đến cao', "arrayMappedname": 'priceUp'},
-    {"label": 'Giá cao đến thấp', "arrayMappedname": 'priceDown'},
-  ];
   int selectedCategory = 0;
 
   List selectedCategoryList = [];
@@ -87,29 +82,29 @@ class _SortFieldState extends State<SortField> {
             ),
           ),
         ),
-        Center(
-          child: Container(
-            height: 570,
-            child: GridView.count(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              childAspectRatio: 2.0 / 3.0,
-              children: [
-                ...List.generate(
-                  selectedCategoryList.length,
-                  (index) {
-                    return ProductCard(product: selectedCategoryList[index]);
+        GridProduct(inputHeight: 590, products: selectedCategoryList),
+        // Center(
+        //   child: Container(
+        //     height: getProportionateScreenHeight(590),
+        //     child: GridView.count(
+        //       scrollDirection: Axis.vertical,
+        //       shrinkWrap: true,
+        //       crossAxisCount: 2,
+        //       childAspectRatio: 2.0 / 3.0,
+        //       children: [
+        //         ...List.generate(
+        //           selectedCategoryList.length,
+        //           (index) {
+        //             return ProductCard(product: selectedCategoryList[index]);
 
-                    // return SizedBox
-                    //     .shrink(); // here by default width and height is 0
-                  },
-                ),
-                SizedBox(width: getProportionateScreenWidth(20)),
-              ],
-            ),
-          ),
-        ),
+        //             // return SizedBox
+        //             //     .shrink(); // here by default width and height is 0
+        //           },
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

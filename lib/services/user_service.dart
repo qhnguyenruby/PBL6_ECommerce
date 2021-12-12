@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:online_shop_app/constants.dart';
 import 'package:online_shop_app/function/local_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:online_shop_app/models/ApiResponse.dart';
 import 'package:online_shop_app/models/UserUpdate.dart';
 
 class UserService {
@@ -35,7 +36,7 @@ class UserService {
     }
   }
 
-  Future<int> UpdateUser(UserUpdate userUpdate) async {
+  Future<ApiResponse> UpdateUser(UserUpdate userUpdate) async {
     var url = "${SERVER_IP}/api/Users/me";
     Map data = {
       "fullName": userUpdate.fullName,
@@ -52,10 +53,10 @@ class UserService {
       },
       body: json.encode(data),
     );
-    // print('Response reponse update: ${res.body}');
+    print('Response reponse update: ${res.body}');
 
     // return json.decode(res.body);
-    return res.statusCode;
+    return ApiResponse(statusCode: res.statusCode, body: res.body);
   }
 
   Future<int> ForgotPassword(String email) async {
