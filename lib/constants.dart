@@ -18,6 +18,13 @@ final headingStyle = TextStyle(
   height: 1.5,
 );
 
+List categories = [
+  {"label": 'Mới nhất', "arrayMappedname": 'lastest'},
+  {"label": 'Phổ biến', "arrayMappedname": 'popular'},
+  {"label": 'Giá thấp đến cao', "arrayMappedname": 'priceUp'},
+  {"label": 'Giá cao đến thấp', "arrayMappedname": 'priceDown'},
+];
+
 const defaultDuration = Duration(milliseconds: 250);
 
 const kAnimationDuration = Duration(milliseconds: 200);
@@ -26,16 +33,16 @@ const kAnimationDuration = Duration(milliseconds: 200);
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]");
 final RegExp phoneNumberValidatorRegExp = RegExp(r"^(?:[+0]9)?[0-9]{10}$");
-const String kEmailNullError = "Please Enter your email";
-const String kInvalidEmailError = "Please Enter Valid Email";
-const String kPassNullError = "Please Enter your password";
-const String kConfirmPassNullError = "Please confirm password";
-const String kShortPassError = "Password is too short";
-const String kMatchPassError = "Passwords don't match";
-const String kUsernameNullError = "Please Enter your username";
-const String kFullNameNullError = "Please Enter your full name";
-const String kPhoneNumberNullError = "Please Enter your phone number";
-const String kInvalidPhoneNumberError = "Please Enter Valid Phone Number";
-const String kAddressNullError = "Please Enter your address";
+const String kEmailNullError = "Nhập vào email của bạn";
+const String kInvalidEmailError = "Email không hợp lệ";
+const String kPassNullError = "Nhập vào mật khẩu của bạn";
+const String kConfirmPassNullError = "Xác nhận mật khẩu của bạn";
+const String kShortPassError = "Mật khẩu quá ngắn";
+const String kMatchPassError = "Xác nhận mật khẩu không đúng";
+const String kUsernameNullError = "Nhập vào tên đăng nhập của bạn";
+const String kFullNameNullError = "Nhập vào họ tên của bạn";
+const String kPhoneNumberNullError = "Nhập vào số điện thoại của bạn";
+const String kInvalidPhoneNumberError = "Số điện thoại không hợp lệ";
+const String kAddressNullError = "Nhập vào địa chỉ của bạn";
 
 const SERVER_IP = "http://192.168.1.91:86";

@@ -52,7 +52,7 @@ class CartService {
   }
 
   Future<ApiResponse> DeleteProductFromCart(int cartItemId) async {
-    var url = "${SERVER_IP}/api/Cart";
+    var url = "${SERVER_IP}/api/Carts";
     var token = await getTokenStorage();
     List<int> productIds = [];
     productIds.add(cartItemId);
@@ -66,7 +66,7 @@ class CartService {
     );
     print('Response status: ${res.statusCode}');
 
-    return new ApiResponse(statusCode: res.statusCode, body: res.body);
+    return ApiResponse(statusCode: res.statusCode, body: res.body);
   }
 
   Future<ApiResponse> UpdateQuantityCartProduct(

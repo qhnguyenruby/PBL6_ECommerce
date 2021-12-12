@@ -34,7 +34,7 @@ class OrderService {
       },
     );
     print('Response status: ${res.statusCode}');
-    return new ApiResponse(statusCode: res.statusCode, body: res.body);
+    return ApiResponse(statusCode: res.statusCode, body: res.body);
   }
 
   Future<ApiResponse> getOrders(String stateOrder) async {
@@ -46,6 +46,25 @@ class OrderService {
     var token = await getTokenStorage();
     var res = await http.get(
       Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    print('Response status: ${res.statusCode}');
+    return ApiResponse(statusCode: res.statusCode, body: res.body);
+  }
+
+  Future<ApiResponse> CancelOrder(int orderId, String cancelReason) async {
+    var url = "${SERVER_IP}/api/Orders/me";
+    Map data = {
+      "orderId": orderId,
+      "cancelReason": cancelReason,
+    };
+    var token = await getTokenStorage();
+    var res = await http.delete(
+      Uri.parse(url),
+      body: json.encode(data),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',

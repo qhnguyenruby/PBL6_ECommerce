@@ -94,19 +94,19 @@ class _UpdateFormState extends State<UpdateForm> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     KeyboardUtil.hideKeyboard(context);
-                    var responseCode = await userService.UpdateUser(userUpdate);
-                    if (responseCode == 200) {
+                    var response = await userService.UpdateUser(userUpdate);
+                    if (response.statusCode == 200) {
                       Navigator.pop(context);
                       displayDialog(
                         context,
-                        "Message",
-                        "Update user Successfully!",
+                        "Thông báo",
+                        "Đã cập nhật thông tin!",
                       );
                     } else {
                       displayDialog(
                         context,
-                        "An Error Occurred",
-                        "Failed update user!",
+                        "Thông báo",
+                        "${response.body}",
                       );
                     }
                   }

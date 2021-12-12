@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:online_shop_app/constants.dart';
 import 'package:online_shop_app/local_storage/shared_preferences.dart';
+import 'package:online_shop_app/models/ApiResponse.dart';
 import 'package:online_shop_app/models/LoginRequest.dart';
 import 'package:online_shop_app/models/RegisterRequest.dart';
 
@@ -16,7 +17,7 @@ class AccountService {
 
   AccountService._internal();
 
-  Future<int> Login(LoginRequest loginRequest) async {
+  Future<ApiResponse> Login(LoginRequest loginRequest) async {
     // var url = Uri.https('$SERVER_IP', '/api/Accounts/login', {'q': '{http}'});
     // var url = Uri.parse("${SERVER_IP}/api/Accounts/login");
     var url = "${SERVER_IP}/api/Accounts/login";
@@ -42,10 +43,10 @@ class AccountService {
         print('token: ${jsonResponse['resultObj']}');
       }
     }
-    return res.statusCode;
+    return ApiResponse(statusCode: res.statusCode, body: res.body);
   }
 
-  Future<int> Register(RegisterRequest registerRequest) async {
+  Future<ApiResponse> Register(RegisterRequest registerRequest) async {
     var url = "${SERVER_IP}/api/Accounts/register";
     Map data = {
       "fullName": registerRequest.fullName,
@@ -72,6 +73,6 @@ class AccountService {
         LocalStorage().saveToken(jsonResponse['resultObj']);
       }
     }
-    return res.statusCode;
+    return ApiResponse(statusCode: res.statusCode, body: res.body);
   }
 }
