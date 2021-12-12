@@ -4,7 +4,9 @@ import 'package:online_shop_app/constants.dart';
 import 'package:online_shop_app/function/local_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:online_shop_app/models/ApiResponse.dart';
+import 'package:online_shop_app/models/ChangePassword.dart';
 import 'package:online_shop_app/models/UserUpdate.dart';
+import 'package:online_shop_app/screens/ChangePassword/components/change_pass_form.dart';
 
 class UserService {
   // UserService() {}
@@ -73,5 +75,26 @@ class UserService {
     //   }
     // }
     return res.statusCode;
+  }
+
+  Future<ApiResponse> ChangePass(ChangePassword changePassword) async {
+    var url = "${SERVER_IP}/api/Users/Password";
+    Map data = {
+      "currentPassword": changePassword.currentPass,
+      "newPassword": changePassword.newPass,
+    };
+    var token = await getTokenStorage();
+    var res = await http.patch(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: json.encode(data),
+    );
+    print('Response reponse update: ${res.body}');
+
+    // return json.decode(res.body);
+    return ApiResponse(statusCode: res.statusCode, body: res.body);
   }
 }
