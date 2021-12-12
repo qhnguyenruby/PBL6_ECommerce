@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop_app/components/custom_dialog.dart';
 import 'package:online_shop_app/local_storage/shared_preferences.dart';
+import 'package:online_shop_app/screens/ChangePassword/change_password_screen.dart';
 import 'package:online_shop_app/screens/cart/cart_screen.dart';
 import 'package:online_shop_app/screens/orders/order_screen.dart';
 import 'package:online_shop_app/screens/profile_detail/profile_detail.dart';
@@ -42,7 +43,9 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Đổi mật khẩu",
             icon: "assets/icons/exchange.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, ChangePasswordScreen.routeName);
+            },
           ),
           ProfileMenu(
             text: "Đăng xuất",

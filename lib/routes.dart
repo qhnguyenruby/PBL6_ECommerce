@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:online_shop_app/screens/ChangePassword/change_password_screen.dart';
 import 'package:online_shop_app/screens/cart/cart_screen.dart';
 import 'package:online_shop_app/screens/cart_payment/cart_payment_screen.dart';
 import 'package:online_shop_app/screens/category_product/category_product_screen.dart';
@@ -36,4 +37,5 @@ final Map<String, WidgetBuilder> routes = {
   OrderScreen.routeName: (context) => OrderScreen(),
   OrderDetailScreen.routeName: (context) => OrderDetailScreen(),
   SearchProductScreen.routName: (context) => SearchProductScreen(),
+  ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
 };
