@@ -2,7 +2,9 @@ import 'package:flutter/widgets.dart';
 import 'package:online_shop_app/screens/ChangePassword/change_password_screen.dart';
 import 'package:online_shop_app/screens/cart/cart_screen.dart';
 import 'package:online_shop_app/screens/cart_payment/cart_payment_screen.dart';
+import 'package:online_shop_app/screens/category_detail/category_detail_screen.dart';
 import 'package:online_shop_app/screens/category_product/category_product_screen.dart';
+import 'package:online_shop_app/screens/category_product_detail/categoty_product_detail_screen.dart';
 import 'package:online_shop_app/screens/comfirm_forgot_password/comfirm_forgot_password_screen.dart';
 import 'package:online_shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:online_shop_app/screens/home/home_screen.dart';
@@ -38,4 +40,7 @@ final Map<String, WidgetBuilder> routes = {
   OrderDetailScreen.routeName: (context) => OrderDetailScreen(),
   SearchProductScreen.routName: (context) => SearchProductScreen(),
   ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
+  CategoryDetailScreen.routeName: (context) => CategoryDetailScreen(),
+  CategoryProductDetailScreen.routeName: (context) =>
+      CategoryProductDetailScreen(),
 };

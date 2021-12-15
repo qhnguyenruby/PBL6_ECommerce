@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop_app/components/grid_product.dart';
-import 'package:online_shop_app/components/product_card.dart';
-import 'package:online_shop_app/models/SearchProductsRequest.dart';
-import 'package:online_shop_app/screens/search_product/components/search_product_field.dart';
+import 'package:online_shop_app/models/SortProductsRequest.dart';
 import 'package:online_shop_app/services/product_service.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -34,7 +32,7 @@ class _BodyState extends State<Body> {
                 height: getProportionateScreenHeight(720),
                 child: Center(
                   child: Text(
-                    "Không tìm thấy kết quả!",
+                    "Không tìm thấy kết quả tìm kiếm!",
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -56,9 +54,18 @@ class _BodyState extends State<Body> {
           // onChanged: (value) => print(value),
           // onEditingComplete: () => ,
           onSubmitted: (value) {
-            SearchProductsRequest searchProductsRequest = SearchProductsRequest(
-                pageIndex: 1, pageSize: 10, key: "$value", sortBy: "latest");
-            ProductService().SearchProduct(searchProductsRequest).then(
+            // SortProductsRequest searchProductsRequest = SortProductsRequest(
+            //   pageIndex: 1,
+            //   pageSize: 10,
+            //   keyWord: "$value",
+            // );
+            ProductService()
+                .GetProductPaging(SortProductsRequest(
+                  pageIndex: 1,
+                  pageSize: 10,
+                  keyWord: "$value",
+                ))
+                .then(
                   (result) => setState(
                     () {
                       searchResult = result;
