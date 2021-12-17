@@ -153,27 +153,21 @@ class _UpdateFormState extends State<UpdateForm> {
 
   TextFormField buildFullNameFormField() {
     return TextFormField(
-      // keyboardType: TextInputType.emailAddress,
-      // onSaved: (newValue) => email = newValue,
-      // onChanged: (value) {
-      //   if (value.isNotEmpty) {
-      //     removeError(error: kEmailNullError);
-      //   } else if (emailValidatorRegExp.hasMatch(value)) {
-      //     removeError(error: kInvalidEmailError);
-      //   }
-      //   return null;
-      // },
-      // validator: (value) {
-      //   if (value!.isEmpty) {
-      //     addError(error: kEmailNullError);
-      //     return "";
-      //   } else if (!emailValidatorRegExp.hasMatch(value)) {
-      //     addError(error: kInvalidEmailError);
-      //     return "";
-      //   }
-      //   return null;
-      // },
-
+      keyboardType: TextInputType.name,
+      onSaved: (newValue) => fullname = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kFullNameNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kFullNameNullError);
+          return "";
+        }
+        return null;
+      },
       controller: _fullNameController,
       style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
       decoration: InputDecoration(
@@ -187,26 +181,21 @@ class _UpdateFormState extends State<UpdateForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      // keyboardType: TextInputType.emailAddress,
-      // onSaved: (newValue) => email = newValue,
-      // onChanged: (value) {
-      //   if (value.isNotEmpty) {
-      //     removeError(error: kEmailNullError);
-      //   } else if (emailValidatorRegExp.hasMatch(value)) {
-      //     removeError(error: kInvalidEmailError);
-      //   }
-      //   return null;
-      // },
-      // validator: (value) {
-      //   if (value!.isEmpty) {
-      //     addError(error: kEmailNullError);
-      //     return "";
-      //   } else if (!emailValidatorRegExp.hasMatch(value)) {
-      //     addError(error: kInvalidEmailError);
-      //     return "";
-      //   }
-      //   return null;
-      // },
+      keyboardType: TextInputType.name,
+      onSaved: (newValue) => address = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kAddressNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kAddressNullError);
+          return "";
+        }
+        return null;
+      },
       controller: _addressController,
       style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
       decoration: InputDecoration(
@@ -222,25 +211,25 @@ class _UpdateFormState extends State<UpdateForm> {
     return TextFormField(
       controller: _phoneNumberController,
       keyboardType: TextInputType.phone,
-      // onSaved: (newValue) => email = newValue,
-      // onChanged: (value) {
-      //   if (value.isNotEmpty) {
-      //     removeError(error: kEmailNullError);
-      //   } else if (emailValidatorRegExp.hasMatch(value)) {
-      //     removeError(error: kInvalidEmailError);
-      //   }
-      //   return null;
-      // },
-      // validator: (value) {
-      //   if (value!.isEmpty) {
-      //     addError(error: kEmailNullError);
-      //     return "";
-      //   } else if (!emailValidatorRegExp.hasMatch(value)) {
-      //     addError(error: kInvalidEmailError);
-      //     return "";
-      //   }
-      //   return null;
-      // },
+      onSaved: (newValue) => phoneNumber = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kPhoneNumberNullError);
+        } else if (phoneNumberValidatorRegExp.hasMatch(value)) {
+          removeError(error: kInvalidPhoneNumberError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kPhoneNumberNullError);
+          return "";
+        } else if (!phoneNumberValidatorRegExp.hasMatch(value)) {
+          addError(error: kInvalidPhoneNumberError);
+          return "";
+        }
+        return null;
+      },
       decoration: InputDecoration(
         labelText: "Số điện thoại",
         hintText: "Nhập số điện thoại",

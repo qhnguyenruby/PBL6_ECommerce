@@ -54,24 +54,7 @@ class CategoryProductDetailScreen extends StatelessWidget {
             : (categoryName == "Phụ kiện")
                 ? 3
                 : 2);
-    List<Map<String, dynamic>> subCategories = [
-      {
-        "Áo": ["Áo Thun", "Áo Sơ mi", "Áo Hoodie", "Áo Khoác"],
-        "idCate": [1, 2, 3, 12],
-      },
-      {
-        "Quần": ["Quần Jean", "Quần Tây", "Quần Đùi"],
-        "idCate": [4, 8, 9],
-      },
-      {
-        "Đầm/váy": ["Váy", "Đầm"],
-        "idCate": [6, 7],
-      },
-      {
-        "Phụ kiện": ["Đồ lót", "Thắt Lưng", "Mũ/Nón"],
-        "idCate": [5, 10, 11],
-      },
-    ];
+
     List<List<ProductHomeView>> listListProduct = args["listListProduct"];
 
     return DefaultTabController(
@@ -111,14 +94,6 @@ class CategoryProductDetailScreen extends StatelessWidget {
       // backgroundColor: kPrimaryColor,
       bottom: TabBar(
         // indicatorColor: Colors.lime,
-        // onTap: (value) {
-        //   setState(() {
-        //     count = value;
-        //   });
-        // },
-        // onTap: (value) {
-        //   print(value);
-        // },
         isScrollable: true,
         labelColor: kPrimaryColor,
         unselectedLabelColor: Colors.black,
@@ -131,10 +106,6 @@ class CategoryProductDetailScreen extends StatelessWidget {
               );
             },
           ),
-          // Tab(text: "Tất cả"),
-          // Tab(text: "Chờ xác nhận"),
-          // Tab(text: "Đã hủy"),
-          // Tab(text: "Đã xác nhận"),
         ],
       ),
     );
