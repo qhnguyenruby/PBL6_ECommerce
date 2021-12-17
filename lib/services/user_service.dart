@@ -33,6 +33,10 @@ class UserService {
 
     if (res.statusCode == 200) {
       return UserUpdate.fromJson(json.decode(res.body));
+    } else if (res.statusCode == 403) {
+      throw Exception("Tài khoản của bạn đã bị vô hiệu hóa!");
+    } else if (res.statusCode == 500) {
+      throw Exception("Lỗi server!");
     } else {
       throw Exception("Failed to get current user!");
     }
@@ -61,7 +65,7 @@ class UserService {
     return ApiResponse(statusCode: res.statusCode, body: res.body);
   }
 
-  Future<int> ForgotPassword(String email) async {
+  Future<ApiResponse> ForgotPassword(String email) async {
     var url = "${SERVER_IP}/api/Users/$email/ForgetPassword";
     var res = await http.post(
       Uri.parse(url),
@@ -74,7 +78,7 @@ class UserService {
     //   if (jsonResponse != null) {
     //   }
     // }
-    return res.statusCode;
+    return ApiResponse(statusCode: res.statusCode, body: res.body);
   }
 
   Future<ApiResponse> ChangePass(ChangePassword changePassword) async {

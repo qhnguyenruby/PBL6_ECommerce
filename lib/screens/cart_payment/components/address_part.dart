@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop_app/components/custom_btn.dart';
+import 'package:online_shop_app/models/AddressOrderUpdate.dart';
 import 'package:online_shop_app/models/UserUpdate.dart';
+import 'package:online_shop_app/screens/change_address_order/change_address_order_screen.dart';
 import 'package:online_shop_app/services/user_service.dart';
 
 import '../../../size_config.dart';
 
 class AddressPart extends StatefulWidget {
-  const AddressPart({Key? key}) : super(key: key);
-
+  const AddressPart({
+    Key? key,
+    required this.functionUpdateCurrentUser,
+  }) : super(key: key);
+  final functionUpdateCurrentUser;
   @override
   _AddressPartState createState() => _AddressPartState();
 }
@@ -19,13 +24,32 @@ class _AddressPartState extends State<AddressPart> {
     return userUpdate;
   }
 
+  AddressOrderUpdate currentUserAddress = AddressOrderUpdate(
+    fullName: "",
+    phoneNumber: "",
+    address: "",
+  );
+  // void updateCurrentUser(AddressOrderUpdate newAddress) {
+  //   setState(() {
+  //     currentUserAddress = newAddress;
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: getCurrentUserUpdate(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          var currentUser = snapshot.data as UserUpdate;
+          if (currentUserAddress.fullName == "") {
+            UserUpdate currentUser = snapshot.data as UserUpdate;
+            currentUserAddress = AddressOrderUpdate(
+              fullName: currentUser.fullName,
+              phoneNumber: currentUser.phoneNumber,
+              address: currentUser.address,
+            );
+          }
+
           return Container(
             // height: 90,
             width: double.infinity,
@@ -61,14 +85,14 @@ class _AddressPartState extends State<AddressPart> {
                           ),
                         ),
                         Text(
-                          "${currentUser.fullName} | ${currentUser.phoneNumber}",
+                          "${currentUserAddress.fullName} | ${currentUserAddress.phoneNumber}",
                           style: TextStyle(
                               // color: Color(0xff9b96d6),
                               fontSize: 13,
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "${currentUser.address}",
+                          "${currentUserAddress.address}",
                           style: TextStyle(
                               // color: Color(0xff9b96d6),
                               fontSize: 13,
@@ -80,7 +104,15 @@ class _AddressPartState extends State<AddressPart> {
                 ),
                 CustomButton(
                   color: Colors.lightBlue.shade100,
-                  press: () {},
+                  press: () async {
+                    var newUpdate = await Navigator.pushNamed(
+                        context, ChangeAddressOrderScreen.routeName,
+                        arguments: widget.functionUpdateCurrentUser);
+                    setState(() {
+                      currentUserAddress = newUpdate as AddressOrderUpdate;
+                    });
+                    print("fullName: ${currentUserAddress.fullName}");
+                  },
                   text: "Thay đổi",
                   height: 40,
                   width: 80,

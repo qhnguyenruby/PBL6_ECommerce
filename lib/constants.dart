@@ -25,6 +25,25 @@ List categories = [
   {"label": 'Giá cao đến thấp', "arrayMappedname": 'priceDown'},
 ];
 
+List<Map<String, dynamic>> subCategories = [
+  {
+    "Áo": ["Áo Thun", "Áo Sơ mi", "Áo Hoodie", "Áo Khoác"],
+    "idCate": [1, 2, 3, 12],
+  },
+  {
+    "Quần": ["Quần Jean", "Quần Tây", "Quần Đùi"],
+    "idCate": [4, 8, 9],
+  },
+  {
+    "Đầm/váy": ["Váy", "Đầm"],
+    "idCate": [6, 7],
+  },
+  {
+    "Phụ kiện": ["Đồ lót", "Thắt Lưng", "Mũ/Nón"],
+    "idCate": [5, 10, 11],
+  },
+];
+
 const defaultDuration = Duration(milliseconds: 250);
 
 const kAnimationDuration = Duration(milliseconds: 200);

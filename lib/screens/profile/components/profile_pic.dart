@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop_app/size_config.dart';
 
 class ProfilePic extends StatelessWidget {
   const ProfilePic({
@@ -8,11 +9,11 @@ class ProfilePic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100.0,
-      height: 100.0,
+      width: getProportionateScreenWidth(300.0),
+      height: getProportionateScreenHeight(90.0),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/Logo.png'),
+          image: AssetImage('assets/images/Logo 3@2x.png'),
           fit: BoxFit.fill,
         ),
       ),

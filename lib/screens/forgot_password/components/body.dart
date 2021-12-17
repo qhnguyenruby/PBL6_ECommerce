@@ -107,16 +107,16 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 UserService userService = UserService();
-                var responseCode =
+                var response =
                     await userService.ForgotPassword(_emailController.text);
-                if (responseCode == 200) {
+                if (response.statusCode == 200) {
                   Navigator.pushNamed(
                       context, ConfirmForgotPasswordScreen.routeName);
                 } else {
                   displayDialog(
                     context,
-                    "An Error Occurred",
-                    "Lỗi!",
+                    "Thông báo",
+                    "${response.body}",
                   );
                 }
               }

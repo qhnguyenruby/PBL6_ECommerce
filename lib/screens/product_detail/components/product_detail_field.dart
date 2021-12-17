@@ -11,6 +11,7 @@ import 'package:online_shop_app/models/Carts.dart';
 import 'package:online_shop_app/models/ProductDetail.dart';
 import 'package:online_shop_app/models/Shop.dart';
 import 'package:online_shop_app/screens/cart_payment/cart_payment_screen.dart';
+import 'package:online_shop_app/screens/shop/shop_screen.dart';
 import 'package:online_shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:online_shop_app/services/cart_service.dart';
 import 'package:online_shop_app/services/shop_service.dart';
@@ -127,9 +128,8 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
     }
   }
 
-  final TextStyle myStyle = TextStyle(
-    fontSize: 18,
-  );
+  final TextStyle myStyle =
+      TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
   // Widget _buildImage() {
   //   return Center(
@@ -216,12 +216,12 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
         children: <Widget>[
           Text(
             widget.product.name,
-            style: myStyle,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            "${widget.product.price.toString()} đ",
+            "Giá: ${widget.product.price.toString()} đ",
             style: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 18,
@@ -235,7 +235,7 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
 
   Widget _buildDiscription() {
     return ReadMoreText(
-      widget.product.description,
+      "Mô tả sản phẩm: \n${widget.product.description}",
       trimLines: 5,
       trimMode: TrimMode.Line,
       trimCollapsedText: 'Đọc thêm',
@@ -597,7 +597,10 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
                     ),
                     CustomButton(
                       color: Colors.red,
-                      press: () {},
+                      press: () {
+                        Navigator.pushNamed(context, ShopScreen.routeName,
+                            arguments: snapshot.data);
+                      },
                       text: "Xem Shop",
                       height: 40,
                       width: 80,
