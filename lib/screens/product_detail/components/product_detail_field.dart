@@ -11,6 +11,7 @@ import 'package:online_shop_app/models/Carts.dart';
 import 'package:online_shop_app/models/ProductDetail.dart';
 import 'package:online_shop_app/models/Shop.dart';
 import 'package:online_shop_app/screens/cart_payment/cart_payment_screen.dart';
+import 'package:online_shop_app/screens/disable_user/disable_user_screen.dart';
 import 'package:online_shop_app/screens/shop/shop_screen.dart';
 import 'package:online_shop_app/screens/sign_in/sign_in_screen.dart';
 import 'package:online_shop_app/services/cart_service.dart';
@@ -93,7 +94,8 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
   void setThumbnailList() {
     for (int i = 0; i < imageList.length; i++) {
       if (imageList[i].isDefault || imageList[i].colorName == "không màu") {
-        imgPathList.add('${SERVER_IP}${imageList[i].imagePath}');
+        imgPathList
+            .add('${SERVER_IP}/apigateway/Products${imageList[i].imagePath}');
       }
     }
   }
@@ -557,7 +559,7 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
                             image: DecorationImage(
                               fit: BoxFit.fill,
                               image: NetworkImage(
-                                  "${SERVER_IP}${(snapshot.data as Shop).avatar}"),
+                                  "${SERVER_IP}/apigateway/Shops${(snapshot.data as Shop).avatar}"),
                             ),
                           ),
                         ),
@@ -633,8 +635,10 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: (currentImageWithColor != "/storage/")
-                      ? NetworkImage("${SERVER_IP}${currentImageWithColor}")
+                  image: (currentImageWithColor != "/storage/" &&
+                          currentImageWithColor != "")
+                      ? NetworkImage(
+                          "${SERVER_IP}/apigateway/Products${currentImageWithColor}")
                       : AssetImage("assets/images/notfoundimage.png")
                           as ImageProvider,
                 ),
@@ -707,6 +711,8 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
                               "Thông báo",
                               json.decode(response.body)['message'].toString(),
                             );
+                          } else if (response.statusCode == 403) {
+                            Navigator.pushNamed(context, DisableUser.routeName);
                           } else {
                             Navigator.pop(context);
                             displayDialog(
@@ -723,7 +729,9 @@ class _ProductDetailFieldState extends State<ProductDetailField> {
                       press: () async {
                         response = await cartService.AddProductToCart(
                             productIdSelected, count);
-                        if (response.statusCode != 200) {
+                        if (response.statusCode == 403) {
+                          Navigator.pushNamed(context, DisableUser.routeName);
+                        } else if (response.statusCode != 200) {
                           displayDialog(
                             context,
                             "Thông báo",

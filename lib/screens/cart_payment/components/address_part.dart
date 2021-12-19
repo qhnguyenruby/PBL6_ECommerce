@@ -37,6 +37,11 @@ class _AddressPartState extends State<AddressPart> {
 
   @override
   Widget build(BuildContext context) {
+    currentUserAddress = AddressOrderUpdate(
+      fullName: "",
+      phoneNumber: "",
+      address: "",
+    );
     return FutureBuilder(
       future: getCurrentUserUpdate(),
       builder: (context, snapshot) {
@@ -111,7 +116,7 @@ class _AddressPartState extends State<AddressPart> {
                     setState(() {
                       currentUserAddress = newUpdate as AddressOrderUpdate;
                     });
-                    print("fullName: ${currentUserAddress.fullName}");
+                    // print("fullName: ${currentUserAddress.fullName}");
                   },
                   text: "Thay đổi",
                   height: 40,

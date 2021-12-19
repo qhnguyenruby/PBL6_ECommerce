@@ -7,6 +7,7 @@ import 'package:online_shop_app/screens/category_product/category_product_screen
 import 'package:online_shop_app/screens/category_product_detail/categoty_product_detail_screen.dart';
 import 'package:online_shop_app/screens/change_address_order/change_address_order_screen.dart';
 import 'package:online_shop_app/screens/comfirm_forgot_password/comfirm_forgot_password_screen.dart';
+import 'package:online_shop_app/screens/disable_user/disable_user_screen.dart';
 import 'package:online_shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:online_shop_app/screens/home/home_screen.dart';
 import 'package:online_shop_app/screens/order_detail/order_detail_screen.dart';
@@ -45,4 +46,5 @@ final Map<String, WidgetBuilder> routes = {
       CategoryProductDetailScreen(),
   ShopScreen.routeName: (context) => ShopScreen(),
   ChangeAddressOrderScreen.routeName: (context) => ChangeAddressOrderScreen(),
+  DisableUser.routeName: (context) => DisableUser(),
 };

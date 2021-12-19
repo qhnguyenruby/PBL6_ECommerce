@@ -39,7 +39,8 @@ class OrderCard extends StatelessWidget {
                         fit: BoxFit.fill,
                         image: (orders[0].image != "/storage/" &&
                                 orders[0].image != "")
-                            ? NetworkImage("${SERVER_IP}${orders[0].image}")
+                            ? NetworkImage(
+                                "${SERVER_IP}/apigateway/Products${orders[0].image}")
                             : AssetImage("assets/images/notfoundimage.png")
                                 as ImageProvider,
                       )),

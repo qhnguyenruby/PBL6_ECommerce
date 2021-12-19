@@ -81,7 +81,7 @@ class _SignFormState extends State<SignForm> {
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
-            text: "Continue",
+            text: "Đăng nhập",
             press: () async {
               LoginRequest loginRequest = LoginRequest(
                 username: _usernameController.text,

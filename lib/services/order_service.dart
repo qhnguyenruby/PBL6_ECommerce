@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:online_shop_app/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:online_shop_app/function/local_storage.dart';
@@ -16,8 +15,8 @@ class OrderService {
 
   Future<ApiResponse> CreateOrder(List<int> cartIds, String shipName,
       String shipAddress, String shipPhone) async {
-    var url = "${SERVER_IP}/api/Orders";
-    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    // var url = "${SERVER_IP}/api/Orders";
+    var url = "${SERVER_IP}/apigateway/Orders";
     Map data = {
       "cartIds": cartIds,
       "shipName": shipName,
@@ -38,9 +37,10 @@ class OrderService {
   }
 
   Future<ApiResponse> getOrders(String stateOrder) async {
-    var url = "${SERVER_IP}/api/Orders/me";
+    // var url = "${SERVER_IP}/api/Orders/me";
+    var url = "${SERVER_IP}/apigateway/Orders/me";
     if (stateOrder != "") {
-      url = "${SERVER_IP}/api/Orders/me?state=${stateOrder}";
+      url = "${SERVER_IP}/apigateway/Orders/me?state=${stateOrder}";
     }
 
     var token = await getTokenStorage();
@@ -56,7 +56,8 @@ class OrderService {
   }
 
   Future<ApiResponse> CancelOrder(int orderId, String cancelReason) async {
-    var url = "${SERVER_IP}/api/Orders/me";
+    // var url = "${SERVER_IP}/api/Orders/me";
+    var url = "${SERVER_IP}/apigateway/Orders/me";
     Map data = {
       "orderId": orderId,
       "cancelReason": cancelReason,

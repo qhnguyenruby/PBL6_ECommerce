@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop_app/models/ProductDetail.dart';
+import 'dart:io' as io;
 import 'package:online_shop_app/models/ProductHomeView.dart';
 import 'package:online_shop_app/screens/product_detail/product_detail_screen.dart';
 import 'package:online_shop_app/services/product_service.dart';
@@ -20,6 +21,13 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+//     bool isImageExist = false;
+//     checkImageExist(String path) async {
+//       var syncPath = await path;
+// // for a file
+//       await io.File(syncPath).exists();
+//     }
+
     return Padding(
       padding: EdgeInsets.only(
         left: getProportionateScreenWidth(20),
@@ -63,10 +71,17 @@ class ProductCard extends StatelessWidget {
                   child: Hero(
                     tag: product.id.toString(),
                     child: FadeInImage(
+                      // image: (product.thumbnailImage != "" &&
+                      //         product.thumbnailImage != "/storage/")
+                      //     ? NetworkImage(
+                      //         "${SERVER_IP}/apigateway/Products${product.thumbnailImage}",
+                      //       )
+                      //     : AssetImage("assets/images/notfoundimage.png")
+                      //         as ImageProvider,
                       image: (product.thumbnailImage != "" &&
                               product.thumbnailImage != "/storage/")
                           ? NetworkImage(
-                              "${SERVER_IP}${product.thumbnailImage}",
+                              "${SERVER_IP}/apigateway/Products${product.thumbnailImage}",
                             )
                           : AssetImage("assets/images/notfoundimage.png")
                               as ImageProvider,

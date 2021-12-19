@@ -27,7 +27,7 @@ class ProductService {
     var sortBy = sortProductsRequest.sortBy;
     var keyword = sortProductsRequest.keyWord;
     var url =
-        "${SERVER_IP}/api/Products/paging?PageIndex=${pageIndex}&PageSize=${pageSize}&SortBy=${sortBy}&Keyword=${keyword}&ProductId=${productId}&CategoryId=${categoryId}&Gender=${gender}&ShopId=${shopId}";
+        "${SERVER_IP}/apigateway/Products/paging?PageIndex=${pageIndex}&PageSize=${pageSize}&SortBy=${sortBy}&Keyword=${keyword}&ProductId=${productId}&CategoryId=${categoryId}&Gender=${gender}&ShopId=${shopId}";
     var res = await http.get(
       Uri.parse(url),
       headers: {
@@ -46,7 +46,7 @@ class ProductService {
   }
 
   Future<ProductDetail> getProductDetailById(int id) async {
-    var url = "${SERVER_IP}/api/Products/$id";
+    var url = "${SERVER_IP}/apigateway/Products/$id";
     var res = await http.get(
       Uri.parse(url),
       headers: {
