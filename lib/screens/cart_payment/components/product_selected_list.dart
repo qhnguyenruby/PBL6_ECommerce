@@ -68,7 +68,8 @@ class _ProductSelectedListState extends State<ProductSelectedList> {
                   fit: BoxFit.fill,
                   image: (cartProduct.image != "/storage/" &&
                           cartProduct.image != "")
-                      ? NetworkImage("${SERVER_IP}${cartProduct.image}")
+                      ? NetworkImage(
+                          "${SERVER_IP}/apigateway/Products${cartProduct.image}")
                       : AssetImage("assets/images/notfoundimage.png")
                           as ImageProvider,
                   // image: AssetImage("assets/images/notfoundimage.png"),

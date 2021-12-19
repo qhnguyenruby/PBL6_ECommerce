@@ -16,16 +16,29 @@ class ShopTabbar extends StatelessWidget {
   Widget build(BuildContext context) {
     List<List<ProductHomeView>> listListProduct = [];
     getProductOfShop(int shopId) async {
-      for (var i in ["lastest", "popular", "priceUp", "priceDown"]) {
+      // listListProduct.clear();
+      // for (var i in ["lastest", "popular", "priceUp", "priceDown"]) {
+      //   var res = await ProductService().GetProductPaging(
+      //     SortProductsRequest(
+      //         pageIndex: 1, pageSize: 10, shopId: shopId, sortBy: i),
+      //   );
+      //   listListProduct.add(res);
+      // }
+      await Future.forEach(["lastest", "popular", "priceUp", "priceDown"],
+          (item) async {
         var res = await ProductService().GetProductPaging(
           SortProductsRequest(
-              pageIndex: 1, pageSize: 10, shopId: shopId, sortBy: i),
+              pageIndex: 1,
+              pageSize: 10,
+              shopId: shopId,
+              sortBy: item.toString()),
         );
         listListProduct.add(res);
-      }
+      });
     }
 
     getProductOfShop(shop.shopId);
+    print(listListProduct.length);
 
     return Container(
       height: getProportionateScreenHeight(612),

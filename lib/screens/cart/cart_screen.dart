@@ -30,20 +30,27 @@ class CartScreen extends StatelessWidget {
               ? cartsFromJson(data.body).cartItems
               : [];
           return Scaffold(
-              appBar: buildAppBar(
-                context,
-                cartItems,
-              ),
-              body: (cartItems.isNotEmpty)
-                  ? Body(cartItems: cartItems)
-                  : Center(
-                      child: Text(
-                        "Giỏ hàng trống!",
-                        textAlign: TextAlign.center,
+            appBar: buildAppBar(
+              context,
+              cartItems,
+            ),
+            body: (cartItems.isNotEmpty)
+                ? Body(cartItems: cartItems)
+                : (data.statusCode == 403)
+                    ? Center(
+                        child: Text(
+                          "Tài khoản của bạn đã bị vô hiệu hóa!",
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    : Center(
+                        child: Text(
+                          "Giỏ hàng trống!",
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    )
-              // bottomNavigationBar: CheckoutCard(),
-              );
+            // bottomNavigationBar: CheckoutCard(),
+          );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }

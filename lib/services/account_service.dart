@@ -18,10 +18,8 @@ class AccountService {
   AccountService._internal();
 
   Future<ApiResponse> Login(LoginRequest loginRequest) async {
-    // var url = Uri.https('$SERVER_IP', '/api/Accounts/login', {'q': '{http}'});
-    // var url = Uri.parse("${SERVER_IP}/api/Accounts/login");
-    var url = "${SERVER_IP}/api/Accounts/login";
-    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    // var url = "${SERVER_IP}/api/Accounts/login";
+    var url = "${SERVER_IP}/apigateway/Authen/login";
     Map data = {
       "username": loginRequest.username,
       "password": loginRequest.password,
@@ -47,7 +45,8 @@ class AccountService {
   }
 
   Future<ApiResponse> Register(RegisterRequest registerRequest) async {
-    var url = "${SERVER_IP}/api/Accounts/register";
+    // var url = "${SERVER_IP}/api/Accounts/register";
+    var url = "${SERVER_IP}/apigateway/Authen/register";
     Map data = {
       "fullName": registerRequest.fullName,
       "email": registerRequest.email,

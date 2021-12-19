@@ -5,6 +5,7 @@ import 'package:online_shop_app/function/local_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:online_shop_app/models/ApiResponse.dart';
 import 'package:online_shop_app/models/ChangePassword.dart';
+import 'package:online_shop_app/models/User.dart';
 import 'package:online_shop_app/models/UserUpdate.dart';
 import 'package:online_shop_app/screens/ChangePassword/components/change_pass_form.dart';
 
@@ -20,7 +21,8 @@ class UserService {
   UserService._internal();
 
   Future<UserUpdate> GetUserByToken() async {
-    var url = "${SERVER_IP}/api/Users/me";
+    // var url = "${SERVER_IP}/api/Users/me";
+    var url = "${SERVER_IP}/apigateway/Users/me";
     var token = await getTokenStorage();
     var res = await http.get(
       Uri.parse(url),
@@ -33,8 +35,28 @@ class UserService {
 
     if (res.statusCode == 200) {
       return UserUpdate.fromJson(json.decode(res.body));
-    } else if (res.statusCode == 403) {
-      throw Exception("Tài khoản của bạn đã bị vô hiệu hóa!");
+    } else if (res.statusCode == 500) {
+      throw Exception("Lỗi server!");
+    } else {
+      throw Exception("Failed to get current user!");
+    }
+  }
+
+  Future<User> GetCurrentUser() async {
+    // var url = "${SERVER_IP}/api/Users/me";
+    var url = "${SERVER_IP}/apigateway/Users/me";
+    var token = await getTokenStorage();
+    var res = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    print('Response status: ${res.statusCode}');
+
+    if (res.statusCode == 200) {
+      return User.fromJson(json.decode(res.body));
     } else if (res.statusCode == 500) {
       throw Exception("Lỗi server!");
     } else {
@@ -43,7 +65,8 @@ class UserService {
   }
 
   Future<ApiResponse> UpdateUser(UserUpdate userUpdate) async {
-    var url = "${SERVER_IP}/api/Users/me";
+    // var url = "${SERVER_IP}/api/Users/me";
+    var url = "${SERVER_IP}/apigateway/Users/me";
     Map data = {
       "fullName": userUpdate.fullName,
       "email": userUpdate.email,
@@ -66,7 +89,8 @@ class UserService {
   }
 
   Future<ApiResponse> ForgotPassword(String email) async {
-    var url = "${SERVER_IP}/api/Users/$email/ForgetPassword";
+    // var url = "${SERVER_IP}/api/Users/$email/ForgetPassword";
+    var url = "${SERVER_IP}/apigateway/Users/$email/ForgetPassword";
     var res = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
@@ -82,7 +106,8 @@ class UserService {
   }
 
   Future<ApiResponse> ChangePass(ChangePassword changePassword) async {
-    var url = "${SERVER_IP}/api/Users/Password";
+    // var url = "${SERVER_IP}/api/Users/Password";
+    var url = "${SERVER_IP}/apigateway/Users/Password";
     Map data = {
       "currentPassword": changePassword.currentPass,
       "newPassword": changePassword.newPass,
@@ -96,7 +121,7 @@ class UserService {
       },
       body: json.encode(data),
     );
-    print('Response reponse update: ${res.body}');
+    print('Response reponse update: ${res.statusCode}');
 
     // return json.decode(res.body);
     return ApiResponse(statusCode: res.statusCode, body: res.body);

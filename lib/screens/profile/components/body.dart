@@ -3,8 +3,10 @@ import 'package:online_shop_app/components/custom_dialog.dart';
 import 'package:online_shop_app/local_storage/shared_preferences.dart';
 import 'package:online_shop_app/screens/ChangePassword/change_password_screen.dart';
 import 'package:online_shop_app/screens/cart/cart_screen.dart';
+import 'package:online_shop_app/screens/disable_user/disable_user_screen.dart';
 import 'package:online_shop_app/screens/orders/order_screen.dart';
 import 'package:online_shop_app/screens/profile_detail/profile_detail.dart';
+import 'package:online_shop_app/services/user_service.dart';
 import '../../../size_config.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -29,22 +31,40 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Giỏ hàng",
             icon: "assets/icons/Cart Icon.svg",
-            press: () => {
-              Navigator.pushNamed(context, CartScreen.routeName),
+            press: () async {
+              UserService userService = UserService();
+              var currentUser = await userService.GetCurrentUser();
+              if (currentUser.disable == false) {
+                Navigator.pushNamed(context, CartScreen.routeName);
+              } else {
+                Navigator.pushNamed(context, DisableUser.routeName);
+              }
             },
           ),
           ProfileMenu(
             text: "Đơn mua",
             icon: "assets/icons/history.svg",
-            press: () {
-              Navigator.pushNamed(context, OrderScreen.routeName);
+            press: () async {
+              UserService userService = UserService();
+              var currentUser = await userService.GetCurrentUser();
+              if (currentUser.disable == false) {
+                Navigator.pushNamed(context, OrderScreen.routeName);
+              } else {
+                Navigator.pushNamed(context, DisableUser.routeName);
+              }
             },
           ),
           ProfileMenu(
             text: "Đổi mật khẩu",
             icon: "assets/icons/exchange.svg",
-            press: () {
-              Navigator.pushNamed(context, ChangePasswordScreen.routeName);
+            press: () async {
+              UserService userService = UserService();
+              var currentUser = await userService.GetCurrentUser();
+              if (currentUser.disable == false) {
+                Navigator.pushNamed(context, ChangePasswordScreen.routeName);
+              } else {
+                Navigator.pushNamed(context, DisableUser.routeName);
+              }
             },
           ),
           ProfileMenu(

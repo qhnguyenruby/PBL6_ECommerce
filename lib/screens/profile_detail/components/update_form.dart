@@ -5,6 +5,7 @@ import 'package:online_shop_app/components/form_error.dart';
 import 'package:online_shop_app/function/dialog.dart';
 import 'package:online_shop_app/helper/keyboard.dart';
 import 'package:online_shop_app/models/UserUpdate.dart';
+import 'package:online_shop_app/screens/disable_user/disable_user_screen.dart';
 import 'package:online_shop_app/services/user_service.dart';
 // import 'package:online_shop_app/screens/complete_profile/complete_profile_screen.dart';
 
@@ -102,6 +103,8 @@ class _UpdateFormState extends State<UpdateForm> {
                         "Thông báo",
                         "Đã cập nhật thông tin!",
                       );
+                    } else if (response.statusCode == 403) {
+                      Navigator.pushNamed(context, DisableUser.routeName);
                     } else {
                       displayDialog(
                         context,

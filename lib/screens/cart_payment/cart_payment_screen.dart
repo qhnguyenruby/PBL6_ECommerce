@@ -58,7 +58,10 @@ class _CartPaymentState extends State<CartPayment> {
               address: currentUser.address,
             );
           }
-          // print(shipInfo.fullName);
+          print(cartIds[0]);
+          print(shipInfo.fullName);
+          print(shipInfo.phoneNumber);
+          print(shipInfo.address);
           OrderService()
               .CreateOrder(cartIds, shipInfo.fullName, shipInfo.address,
                   shipInfo.phoneNumber)

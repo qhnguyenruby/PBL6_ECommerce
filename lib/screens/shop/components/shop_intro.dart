@@ -22,7 +22,8 @@ class ShopIntro extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage("$SERVER_IP/${shop.avatar}"),
+                  backgroundImage:
+                      NetworkImage("$SERVER_IP/apigateway/Shops${shop.avatar}"),
                 ),
               ],
             ),
