@@ -4,6 +4,8 @@ import 'package:online_shop_app/components/default_button.dart';
 import 'package:online_shop_app/components/form_error.dart';
 import 'package:online_shop_app/helper/keyboard.dart';
 import 'package:online_shop_app/models/AddressOrderUpdate.dart';
+import 'package:online_shop_app/models/UserUpdate.dart';
+import 'package:online_shop_app/services/user_service.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -12,11 +14,14 @@ class UpdateAddressOrderForm extends StatefulWidget {
   const UpdateAddressOrderForm({
     Key? key,
     required this.functionUpdateAddress,
+    required this.addressOrderUpdate,
   }) : super(key: key);
 
   final functionUpdateAddress;
+  final AddressOrderUpdate addressOrderUpdate;
   @override
-  _UpdateAddressOrderFormState createState() => _UpdateAddressOrderFormState();
+  _UpdateAddressOrderFormState createState() =>
+      _UpdateAddressOrderFormState(this.addressOrderUpdate);
 }
 
 class _UpdateAddressOrderFormState extends State<UpdateAddressOrderForm> {
@@ -25,6 +30,17 @@ class _UpdateAddressOrderFormState extends State<UpdateAddressOrderForm> {
   String? phoneNumber;
   String? fullname;
   String? address;
+
+  _UpdateAddressOrderFormState(AddressOrderUpdate addressOrderUpdate) {
+    this._addressOrderUpdate = addressOrderUpdate;
+    _fullNameController =
+        TextEditingController(text: "${_addressOrderUpdate.fullName}");
+    _phoneNumberController =
+        TextEditingController(text: "${_addressOrderUpdate.phoneNumber}");
+    _addressController =
+        TextEditingController(text: "${_addressOrderUpdate.address}");
+  }
+  late AddressOrderUpdate _addressOrderUpdate;
 
   TextEditingController _fullNameController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();

@@ -20,12 +20,6 @@ class _BodyState extends State<Body> {
       children: [
         SizedBox(height: getProportionateScreenHeight(30)),
         SearchProductField(),
-        // SizedBox(height: getProportionateScreenHeight(10)),
-        // SortProductField(),
-        // SortField(
-        //   lastestProducs: snapshot.data as List<ProductHomeView>,
-        // ),
-        // SearchResultField(),
         (searchResult.length != 0)
             ? GridProduct(inputHeight: 720, products: searchResult)
             : Container(
@@ -43,50 +37,67 @@ class _BodyState extends State<Body> {
 
   Widget SearchProductField() {
     return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Container(
-        width: SizeConfig.screenWidth * 0.7,
-        decoration: BoxDecoration(
-          color: kSecondaryColor.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: TextField(
-          // onChanged: (value) => print(value),
-          // onEditingComplete: () => ,
-          onSubmitted: (value) {
-            // SortProductsRequest searchProductsRequest = SortProductsRequest(
-            //   pageIndex: 1,
-            //   pageSize: 10,
-            //   keyWord: "$value",
-            // );
-            ProductService()
-                .GetProductPaging(SortProductsRequest(
-                  pageIndex: 1,
-                  pageSize: 10,
-                  keyWord: "$value",
-                ))
-                .then(
-                  (result) => setState(
-                    () {
-                      searchResult = result;
-                    },
-                  ),
-                );
-          },
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20),
-                vertical: getProportionateScreenWidth(9)),
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            hintText: "Tìm kiếm",
-            prefixIcon: Icon(Icons.search),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Container(
+              width: SizeConfig.screenWidth * 0.7,
+              decoration: BoxDecoration(
+                color: kSecondaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: TextField(
+                // onChanged: (value) => print(value),
+                // onEditingComplete: () => ,
+                onSubmitted: (value) {
+                  // SortProductsRequest searchProductsRequest = SortProductsRequest(
+                  //   pageIndex: 1,
+                  //   pageSize: 10,
+                  //   keyWord: "$value",
+                  // );
+                  ProductService()
+                      .GetProductPaging(SortProductsRequest(
+                        pageIndex: 1,
+                        pageSize: 10,
+                        keyWord: "$value",
+                      ))
+                      .then(
+                        (result) => setState(
+                          () {
+                            searchResult = result;
+                          },
+                        ),
+                      );
+                },
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20),
+                      vertical: getProportionateScreenWidth(9)),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  hintText: "Tìm kiếm",
+                  prefixIcon: Icon(Icons.search),
+                ),
+                // onTap: () {
+                //   Navigator.pushNamed(context, SearchProductScreen.routName);
+                // },
+              ),
+            ),
           ),
-          // onTap: () {
-          //   Navigator.pushNamed(context, SearchProductScreen.routName);
-          // },
-        ),
+          Container(
+            width: getProportionateScreenWidth(90.0),
+            height: getProportionateScreenHeight(25.0),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/Logo 3@2x.png'),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
