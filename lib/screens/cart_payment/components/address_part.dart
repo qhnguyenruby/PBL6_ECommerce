@@ -37,11 +37,11 @@ class _AddressPartState extends State<AddressPart> {
 
   @override
   Widget build(BuildContext context) {
-    currentUserAddress = AddressOrderUpdate(
-      fullName: "",
-      phoneNumber: "",
-      address: "",
-    );
+    // currentUserAddress = AddressOrderUpdate(
+    //   fullName: "",
+    //   phoneNumber: "",
+    //   address: "",
+    // );
     return FutureBuilder(
       future: getCurrentUserUpdate(),
       builder: (context, snapshot) {
@@ -56,23 +56,10 @@ class _AddressPartState extends State<AddressPart> {
           }
 
           return Container(
-            // height: 90,
             width: double.infinity,
-            // padding: EdgeInsets.symmetric(
-            //   horizontal: getProportionateScreenWidth(20),
-            //   vertical: getProportionateScreenWidth(15),
-            // ),
-            // decoration: BoxDecoration(
-            //   color: Color(0xfffea200),
-            //   borderRadius: BorderRadius.circular(4),
-            // ),
             child: Row(
               children: [
                 Container(
-                  // decoration: BoxDecoration(
-                  //   color: Color(0xfffea200),
-                  //   borderRadius: BorderRadius.circular(4),
-                  // ),
                   width: getProportionateScreenWidth(280),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -92,16 +79,12 @@ class _AddressPartState extends State<AddressPart> {
                         Text(
                           "${currentUserAddress.fullName} | ${currentUserAddress.phoneNumber}",
                           style: TextStyle(
-                              // color: Color(0xff9b96d6),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 13, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "${currentUserAddress.address}",
                           style: TextStyle(
-                              // color: Color(0xff9b96d6),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 13, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -112,11 +95,14 @@ class _AddressPartState extends State<AddressPart> {
                   press: () async {
                     var newUpdate = await Navigator.pushNamed(
                         context, ChangeAddressOrderScreen.routeName,
-                        arguments: widget.functionUpdateCurrentUser);
+                        arguments: [
+                          widget.functionUpdateCurrentUser,
+                          currentUserAddress
+                        ]);
                     setState(() {
                       currentUserAddress = newUpdate as AddressOrderUpdate;
                     });
-                    // print("fullName: ${currentUserAddress.fullName}");
+                    print("fullName: ${currentUserAddress.fullName}");
                   },
                   text: "Thay đổi",
                   height: 40,
@@ -128,8 +114,6 @@ class _AddressPartState extends State<AddressPart> {
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
-
-        // By default, show a loading spinner.
         return const Center(child: CircularProgressIndicator());
       },
     );

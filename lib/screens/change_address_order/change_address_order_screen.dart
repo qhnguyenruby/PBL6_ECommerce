@@ -9,9 +9,12 @@ class ChangeAddressOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments;
+    final args = ModalRoute.of(context)!.settings.arguments as List;
     return Scaffold(
-      body: UpdateAddressOrderForm(functionUpdateAddress: args),
+      body: UpdateAddressOrderForm(
+        functionUpdateAddress: args[0],
+        addressOrderUpdate: args[1],
+      ),
       appBar: AppBar(
         title: Text(
           "Thay đổi địa chỉ nhận hàng",
